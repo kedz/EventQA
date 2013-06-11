@@ -4,11 +4,10 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.text.BreakIterator;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.StringTokenizer;
 
+import edu.columbia.cs.event.qa.util.StopWordFilter;
 import org.jblas.DoubleMatrix;
 
 public class prediction
@@ -87,7 +86,7 @@ public class prediction
 			String s = st.nextToken();
 			if (!s.trim().equals(""))
 			{
-				s=handleStop.filter(s);
+				s= StopWordFilter.filter(s);
 				s=Stem.stemmer(s);
 				if (!s.equals(""))
 				{

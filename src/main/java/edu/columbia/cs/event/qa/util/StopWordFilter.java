@@ -1,4 +1,6 @@
-public class handleStop {
+package edu.columbia.cs.event.qa.util;
+
+public class StopWordFilter {
 
 	public static String filter( String word ){        //Stop word removal
 

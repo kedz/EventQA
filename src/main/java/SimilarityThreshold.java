@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import edu.columbia.cs.event.qa.util.StopWordFilter;
 import org.jblas.DoubleMatrix;
 
 public class SimilarityThreshold
@@ -130,7 +131,7 @@ public class SimilarityThreshold
 			String s = st.nextToken();
 			if (!s.trim().equals(""))
 			{
-				s=handleStop.filter(s);
+				s= StopWordFilter.filter(s);
 				s=Stem.stemmer(s);
 				if (!s.equals(""))
 				{

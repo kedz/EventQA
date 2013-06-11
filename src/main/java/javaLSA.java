@@ -27,7 +27,7 @@ class javaLSA
 			Snew.put(i, i, semantic.get(i));
 		}
 		System.out.println("Snew:"+Snew.rows+"-"+Snew.columns);
-		DoubleMatrix first=Solve.pinv(Snew);
+		DoubleMatrix first= Solve.pinv(Snew);
 		System.out.println("first:"+first.rows+"-"+first.columns);
 		DoubleMatrix mid=TxT.transpose();
 		System.out.println("mid:"+mid.rows+"-"+mid.columns);

@@ -16,18 +16,18 @@
             <version>3.6.9</version>
         </dependency>
 
+
         <dependency>
-            <groupId>org.scalanlp</groupId>
+            <groupId>org.jblas</groupId>
             <artifactId>jblas</artifactId>
-            <version>1.2.1</version>
+            <version>1.2.3</version>
         </dependency>
 
-       <!-- <dependency>
-            <groupId>org.andromda.thirdparty.jmi</groupId>
-            <artifactId>jmi</artifactId>
-            <version>20030918</version>
-        </dependency>-->
-
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+        </dependency>
 
         <dependency>
             <groupId>org.jdom</groupId>

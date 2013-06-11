@@ -4,11 +4,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.Map.Entry;
 
+import edu.columbia.cs.event.qa.util.StopWordFilter;
 import org.jblas.DoubleMatrix;
 
 class train
@@ -108,7 +108,7 @@ class train
 			String s = st.nextToken();
 			if (!s.trim().equals(""))
 			{
-				s=handleStop.filter(s);
+				s= StopWordFilter.filter(s);
 				s=Stem.stemmer(s);
 				if (!s.equals(""))
 				{
