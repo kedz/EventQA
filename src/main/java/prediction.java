@@ -291,6 +291,8 @@ public class prediction
 	
 	public static void main(String args[]) throws Exception
 	{
+
+
 		String vocabFileName=args[0];
 		String spaceFileName=args[1];
 		String testInputFileName=args[2];
