@@ -15,6 +15,8 @@ public class StopWordFilterTest {
     @Test
     public void testFilter() throws Exception {
 
+        StopWordFilter StopWordFilter = new StopWordFilter();
+
         String aStopWord = "the";
         String nonStopWord = "stimpy";
 
