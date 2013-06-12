@@ -20,184 +20,165 @@ import org.jblas.DoubleMatrix;
 public class Prediction {
 
     static String delims = " \r\n\t()";
-    static ArrayList<String> terms = new ArrayList<String>();
-    static DoubleMatrix Space;
 
-//    public Prediction () {
-//        EventQAConfig config = EventQAConfig.getInstance();
-//
-//        String vocabFileName = config.getProperty("vocab.file");
-//        String spaceFileName = config.getProperty("semantic.space.file");
-//        String testInputFileName = config.getProperty("test.file");
-//        String trainWekaFile = config.getProperty("weka.training.file");
-//        String testWekaFile = config.getProperty("weka.testing.file");
-//
-//        int eigenVecs = Integer.parseInt(config.getProperty("number.of.eigenvectors"));
-//        int mode = Integer.parseInt(config.getProperty("mode"));
-//    }
+    private String termFileName;
+    private String spaceFileName;
+    private String testInputFileName;
+    private String trainWekaFile;
+    private String testWekaFile;
+    private int numEigenVectors;
+    private int mode;
 
-    static void readTerms (String termFileName) throws Exception {
-        System.out.println("Adding terms");
-        BufferedReader reader = new BufferedReader(new FileReader(termFileName));
+    public WekaSMOClassifier classifier;
+    public ArrayList<String> terms;
+    public DoubleMatrix semanticSpace;
+
+
+    public Prediction () {
+        loadConfigurations();
+        this.terms = new ArrayList<String>();
+    }
+
+    public void load () throws Exception {
+        System.out.print("Loading Terms Vector... ");
+        loadTerms();
+        System.out.print("Done\nLoading Semantic Space Matrix... ");
+        loadSemanticSpaceMatrix();
+        System.out.print("Done\nLoading Classifier... ");
+        loadClassifier();
+        System.out.println("Done");
+    }
+
+    private void loadConfigurations () {
+        EventQAConfig config = EventQAConfig.getInstance();
+        this.termFileName = config.getProperty("vocab.file");
+        this.spaceFileName = config.getProperty("semantic.space.file");
+        this.testInputFileName = config.getProperty("test.file");
+        this.trainWekaFile = config.getProperty("weka.training.file");
+        this.testWekaFile = config.getProperty("weka.testing.file");
+        this.numEigenVectors = Integer.parseInt(config.getProperty("number.of.eigenvectors"));
+        this.mode = Integer.parseInt(config.getProperty("mode"));
+    }
+
+    public void loadClassifier () throws Exception {
+        this.classifier = (new WekaSMOClassifierFactory()).getWekaSMOClassifier();
+    }
+
+    public void loadTerms () throws Exception {
         String line;
+        BufferedReader reader = new BufferedReader(new FileReader(termFileName));
         while((line = reader.readLine()) != null) {
             terms.add(line);
         }
         reader.close();
     }
 
-    // TODO Speedup -
-    static double[] transform (ArrayList<String> str) {
+    public void loadSemanticSpaceMatrix() throws Exception {
 
-        double[] queryArr = new double[terms.size()];
+        semanticSpace = DoubleMatrix.zeros(numEigenVectors, terms.size()); //new double[1000][terms.size()];
 
-        for (int i=0; i<terms.size(); i++) {
-            if (str.contains(terms.get(i))) {
-                queryArr[i] = getCount(terms.get(i), str);
-            } else {
-                queryArr[i] = 0.0;
+        String line; int c = 0;
+        BufferedReader reader = new BufferedReader(new FileReader(spaceFileName));
+        while((line = reader.readLine())!=null) {
+
+            String[] scores = line.substring(0, line.length()-1).split(",");
+            for (int i=0; i<scores.length; i++) {
+                try {
+                    semanticSpace.put(c, i, Double.parseDouble(scores[i]));
+                } catch(Exception e) {
+                    System.out.println(scores[i]);
+                    e.printStackTrace();
+                    System.exit(1);
+                }
             }
+            c++;
         }
-
-        return queryArr;
     }
 
-    static double getCount(String vocab, ArrayList<String> terms) {
-        double count=0.0;
+    private ArrayList<String> preprocess (String s) {
+        s = s.replace("\"", "");
+        s = ManageMappings.replaceTokens(s);
+        s = s.replaceAll("'s", "");
+        s = s.replaceAll("\n", " ");
+        s = s.replaceAll("\\s+", " ");
+        s = s.replaceAll("\\s$", "");
+        s = s.replaceAll("^\\s", "");
+        s = s.replaceAll("\\p{Punct}", " ");
+        s = s.toLowerCase();
+        return tokenize(s);
+    }
 
-        for (String t: terms)
-        {
-            if (vocab.equals(t))
-            {
-                count=count+1.0;
+    private ArrayList<String> tokenize (String s) {
+        ArrayList<String> tokens = new ArrayList<String>();
+        StringTokenizer stokenizer = new StringTokenizer(s, delims, true);
+        while (stokenizer.hasMoreTokens()) {
+            String tok = stokenizer.nextToken();
+            if (!tok.trim().equals("")) {
+                tok = StopWordFilter.filter(tok);
+                tok = Stem.stemmer(tok);
+                if (!tok.equals("")) {
+                    tokens.add(tok);
+                }
             }
         }
+        return tokens;
+    }
 
+    // TODO Speedup
+    private double[] transform (ArrayList<String> tokens) {
+        double[] termCounts = new double[terms.size()];
+        for (int i=0; i<terms.size(); i++) {
+            if (tokens.contains(terms.get(i))) {
+                termCounts[i] = computeCount(terms.get(i), tokens);
+            } else {
+                termCounts[i] = 0.0;
+            }
+        }
+        return termCounts;
+    }
+
+    private double computeCount (String term, ArrayList<String> tokens) {
+        double count = 0.0;
+        for (String t : tokens) {
+            if (term.equals(t)) { count = count+1.0; }
+        }
         return count;
     }
 
-    static ArrayList<String> preprocessDoc (String s) {
-        String DOC = s.replace("\"", "");
-        DOC = ManageMappings.replaceTokens(DOC);
-        DOC = DOC.replaceAll("'s", "");
-        DOC = DOC.replaceAll("\n", " ");
-        DOC = DOC.replaceAll("\\s+", " ");
-        DOC = DOC.replaceAll("\\s$", "");
-        DOC = DOC.replaceAll("^\\s", "");
-        DOC = DOC.replaceAll("\\p{Punct}", " ");
-        DOC = DOC.toLowerCase();
-        ArrayList<String> allTokens = Split(DOC);
-
-        return allTokens;
+    private double[] foldin (double[] termCounts) {
+        return semanticSpace.mmul(new DoubleMatrix(termCounts)).toArray();
     }
 
-    static ArrayList<String> Split(String str) {   		//Extract Tokens into a ArrayList
-        ArrayList<String> strTokens = new ArrayList<String>();
-        StringTokenizer st = new StringTokenizer(str, delims, true);
-        while (st.hasMoreTokens()) {
-            String s = st.nextToken();
-            if (!s.trim().equals(""))
-            {
-                s= StopWordFilter.filter(s);
-                s= Stem.stemmer(s);
-                if (!s.equals(""))
-                {
-                    strTokens.add(s);
-                }
-            }
-        }
-        return strTokens;
+    private double computeSimilarityBetweenPair (double[] d1, double[] d2) {
+        return dotProduct(d1, d2) / (magnitude(d1)*magnitude(d2));
     }
 
-    static double dotprod(double[] d1, double[] d2) {
-
+    private double magnitude (double[] d) {
         double sum=0;
-        for (int i=0;i<d1.length;i++)
-        {
-            sum += d1[i]*d2[i];
-        }
-        return sum;
-    }
-
-    static double length(double[] d) {
-        double sum=0;
-        for (int i=0;i<d.length;i++)
-        {
-            sum += d[i]*d[i];
-        }
+        for (int i=0; i<d.length;i++) { sum += d[i]*d[i]; }
         return Math.sqrt(sum);
     }
 
-    public static double getSimilaritybwDocs (double[] d1, double[] d2) //Ecach document pair
-    {
-        double sim=dotprod(d1, d2) / (length(d1)*length(d2));
-        return sim;
+    private double dotProduct (double[] d1, double[] d2) {
+        double sum = 0;
+        for (int i=0; i<d1.length; i++) { sum += d1[i]*d2[i]; }
+        return sum;
     }
 
-    static void readSpace(String spaceFileName, int k) throws Exception {
-        System.out.println("Reading Semantic Space");
-        Space = DoubleMatrix.zeros(k, terms.size()); //new double[1000][terms.size()];
-        FileReader fR=new FileReader(spaceFileName);
-        BufferedReader bR=new BufferedReader(fR);
-
-        String data=null;
-        int cnt=0;
-        while((data=bR.readLine())!=null)
-        {
-            String[] tfs=data.substring(0, data.length()-1).split(",");
-            for (int i=0;i<tfs.length;i++)
-            {
-                //Space[cnt][i]=Double.parseDouble(tfs[i]);
-                try{
-                    Space.put(cnt, i, Double.parseDouble(tfs[i]));
-                }
-                catch(Exception e)
-                {
-                    e.printStackTrace();
-                    System.out.println(tfs[i]);
-                    System.exit(0);//xit
-                }
-            }
-            cnt++;
-        }
-        System.out.println("Done Reading Space");
-    }
-
-    static double[] foldin(double[] str)
-    {
-        DoubleMatrix strDM=new DoubleMatrix(str);
-        return Space.mmul(strDM).toArray();
-    }
-
-    static ArrayList<String> sentenceSplitter(String source)
-    {
-        ArrayList<String> sentences=new ArrayList<String>();
-        BreakIterator iterator = BreakIterator.getSentenceInstance(Locale.US);
-        iterator.setText(source);
-        int start = iterator.first();
-        for (int end = iterator.next();
-             end != BreakIterator.DONE;
-             start = end, end = iterator.next()) {
-            sentences.add(source.substring(start,end));
-        }
-        return sentences;
-    }
-
-    static void getFinalSimilarityScore (String QAset, String testWekaFile, WekaSMOClassifier classifier, int mode) throws Exception {
+    public void computeSimilarityScore (String QAset) throws Exception {
         if (mode == 1) {
-            getFinalSimilarityScoreParaLevel(QAset, testWekaFile, classifier);
+            computeSimilarityScoreParagraphLevel(QAset);
         } else if (mode == 2) {
-            getFinalSimilarityScoreSentenceLevel(QAset, testWekaFile, classifier);
+            System.out.println("Get Summarization");
+            computeSimilarityScoreSentenceLevel(QAset);
         } else {
             System.out.println("Enter correct processing level: (1) for Paragraph level and (2) for Sentence level");
             System.exit(1);
         }
     }
 
-    static void getFinalSimilarityScoreParaLevel(String QASet, String testWekaFile, WekaSMOClassifier classifier) throws Exception
-    {
+    public void computeSimilarityScoreParagraphLevel(String QASet) throws Exception {
         PrintWriter writer = new PrintWriter(new FileWriter(testWekaFile));
-
         writer.println("@relation event");
         writer.println("@attribute cosine numeric");
         writer.println("@attribute class {yes, no}");
@@ -206,21 +187,15 @@ public class Prediction {
         writer.flush();
 
         // TODO Use different delimeter - readNewsblasterXML
-        // Q[0] = event query (article title)
-        // Q[1]+ = candidate sentence
         String[] QA = QASet.split("`");
 
-        // Preprocessing step + tokenizing string
-        // Transform to vector representation
-        //
-        double[] q = foldin(transform(preprocessDoc(QA[0])));
+        double[] query = foldin(transform(preprocess(QA[0])));
 
         ArrayList<Double> sims = new ArrayList<Double>();
 
         for (int i=1; i<QA.length; i++) {
-            double[] ans = foldin(transform(preprocessDoc(QA[i])));
-            double similarity = getSimilaritybwDocs(q, ans);
-            //System.out.println(similarity);
+            double[] answer = foldin(transform(preprocess(QA[i])));
+            double similarity = computeSimilarityBetweenPair(query, answer);
             sims.add(similarity);
             writer.println(similarity+",yes");
             writer.flush();
@@ -228,34 +203,32 @@ public class Prediction {
         writer.flush();
         writer.close();
 
-        System.out.println("**Query:"+QA[0]);
+        System.out.println("** Query:"+QA[0]);
         int c = 1;
-
         for (String s : classifier.predict(testWekaFile)) {
-            System.out.println("**Ans"+c+":"+QA[c]);
+            System.out.println("** Ans"+c+":"+QA[c]);
             System.out.println("Similarity:"+sims.get(c-1));
             System.out.println("Prediction:"+s);
             c++;
         }
     }
 
-    static void getFinalSimilarityScoreSentenceLevel(String QASet, String testFName, WekaSMOClassifier classifier) throws Exception
-    {
-        System.out.println("Get Summarization");
-        FileWriter fW=new FileWriter(testFName);
-        PrintWriter pW=new PrintWriter(fW);
+    public void computeSimilarityScoreSentenceLevel(String QASet) throws Exception {
 
-        pW.println("@relation event");
-        pW.println("@attribute cosine numeric");
-        pW.println("@attribute class {yes, no}");
-        pW.println();
+        PrintWriter writer = new PrintWriter(new FileWriter(testWekaFile));
+        writer.println("@relation event");
+        writer.println("@attribute cosine numeric");
+        writer.println("@attribute class {yes, no}");
+        writer.println();
+        writer.println("@data");
+        writer.flush();
 
-        pW.println("@data");
-        pW.flush();
-        String[] QA=QASet.split("`");
+        String[] QA = QASet.split("`");
 
-        double[] q=foldin(transform(preprocessDoc(QA[0])));
+        double[] q = foldin(transform(preprocess(QA[0])));
+
         ArrayList<String> actualStr=new ArrayList<String>();
+
         ArrayList<Double> sims=new ArrayList<Double>();
 
         int cnt=0;
@@ -264,20 +237,19 @@ public class Prediction {
             for (String sentence: sentenceSplitter(QA[i]))
             {
                 cnt++;
-                double[] ans=foldin(transform(preprocessDoc(sentence)));
-                double similarity=getSimilaritybwDocs(q, ans);
+                double[] ans=foldin(transform(preprocess(sentence)));
+                double similarity=computeSimilarityBetweenPair(q, ans);
                 if (!Double.isNaN(similarity) && !Double.isInfinite(similarity))
                 {
                     actualStr.add(sentence);
                     sims.add(similarity);
-                    pW.println(similarity+",yes");
-                    pW.flush();
+                    writer.println(similarity+",yes");
+                    writer.flush();
                 }
             }
         }
-        pW.flush();
-        pW.close();
-        fW.close();
+        writer.flush();
+        writer.close();
 
         System.out.println("Total number of sentences seen: "+cnt);
         System.out.println("Valid sentences: "+actualStr.size());
@@ -285,7 +257,7 @@ public class Prediction {
         StringBuilder summary=new StringBuilder();
         StringBuilder notChosen=new StringBuilder();
 
-        ArrayList<String> predictions = classifier.predict(testFName); //WekaSMOClassifier.getPredictedClass(trainFName, testFName);
+        ArrayList<String> predictions = classifier.predict(testWekaFile); //WekaSMOClassifier.getPredictedClass(trainFName, testFName);
         if (predictions.size()!=actualStr.size())
         {
             System.out.println("NOT SAME");
@@ -315,30 +287,31 @@ public class Prediction {
         System.out.println("NOT Chosen:"+notChosen.toString());
     }
 
-    public static void main (String args[]) throws Exception {
+    private ArrayList<String> sentenceSplitter(String source) {
+        ArrayList<String> sentences=new ArrayList<String>();
+        BreakIterator iterator = BreakIterator.getSentenceInstance(Locale.US);
+        iterator.setText(source);
+        int start = iterator.first();
+        for (int end = iterator.next();
+             end != BreakIterator.DONE;
+             start = end, end = iterator.next()) {
+            sentences.add(source.substring(start,end));
+        }
+        return sentences;
+    }
 
-        EventQAConfig config = EventQAConfig.getInstance();
-
-        String vocabFileName = config.getProperty("vocab.file");
-        String spaceFileName = config.getProperty("semantic.space.file");
-        String testInputFileName = config.getProperty("test.file");
-        String trainWekaFile = config.getProperty("weka.training.file");
-        String testWekaFile = config.getProperty("weka.testing.file");
-
-        int eigenVecs = Integer.parseInt(config.getProperty("number.of.eigenvectors"));
-        int mode = Integer.parseInt(config.getProperty("mode"));
-
-        readTerms(vocabFileName);
-        readSpace(spaceFileName, eigenVecs);
-
-        BufferedReader reader = new BufferedReader(new FileReader(testInputFileName));
-        WekaSMOClassifierFactory factory = new WekaSMOClassifierFactory ();
-        WekaSMOClassifier classifier = factory.getWekaSMOClassifier();
-
+    public void run () throws Exception {
         String QASet;
+        BufferedReader reader = new BufferedReader (new FileReader(testInputFileName));
         while((QASet = reader.readLine()) != null) {
-            getFinalSimilarityScore(QASet, testWekaFile, classifier, mode);
+            computeSimilarityScore(QASet);
             System.out.println("****************************************************");
         }
+    }
+
+    public static void main (String args[]) throws Exception {
+        Prediction droid = new Prediction();
+        droid.load();
+        droid.run();
     }
 }
