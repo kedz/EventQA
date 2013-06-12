@@ -1,3 +1,5 @@
+package edu.columbia.cs.event.qa;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -9,6 +11,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import edu.columbia.cs.event.qa.ManageMappings;
+import edu.columbia.cs.event.qa.Stem;
 import edu.columbia.cs.event.qa.util.StopWordFilter;
 import org.jblas.DoubleMatrix;
 
@@ -111,7 +115,7 @@ public class SimilarityThreshold
 	static ArrayList<String> preprocessDoc(String s)
 	{
 		String DOC=s.replace("\"", "");
-		DOC=manageMappings.replaceTokens(DOC);
+		DOC= ManageMappings.replaceTokens(DOC);
 		DOC=DOC.replaceAll("'s", "");	
 		DOC=DOC.replaceAll("\n", " ");
 		DOC=DOC.replaceAll("\\s+", " ");
@@ -132,7 +136,7 @@ public class SimilarityThreshold
 			if (!s.trim().equals(""))
 			{
 				s= StopWordFilter.filter(s);
-				s=Stem.stemmer(s);
+				s= Stem.stemmer(s);
 				if (!s.equals(""))
 				{
 					strTokens.add(s);

@@ -1,3 +1,5 @@
+package edu.columbia.cs.event.qa;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -10,9 +12,9 @@ import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
 import weka.classifiers.functions.SMO;
 
-class wekaSVM
+public class WekaSVM
 {
-	static ArrayList<String> getPredictedClass(String trainName, String testName) throws Exception
+	public static ArrayList<String> getPredictedClass(String trainName, String testName) throws Exception
 	{
 		BufferedReader bR=new BufferedReader(new FileReader(trainName));
 		Instances train=new Instances(bR);	

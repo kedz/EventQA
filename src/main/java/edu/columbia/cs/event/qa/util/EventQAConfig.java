@@ -30,7 +30,7 @@ public class EventQAConfig {
         System.out.println("[ LOADING CONFIGURATION ]");
 
         try {
-            prop.load(EventQAConfig.class.getClassLoader().getResourceAsStream("event.properties"));
+            prop.load(EventQAConfig.class.getClassLoader().getResourceAsStream("eventqa.properties"));
             this.properties = prop;
 
         } catch (IOException ex) {

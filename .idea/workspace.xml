@@ -2,26 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="63eb3cb6-8559-465c-b08c-288ab96c2f1e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/util/EventQAConfig.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources/eventqa.properties" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/util/StopWordFilter.java" afterPath="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/util/StopWordFilter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/prediction.java" afterPath="$PROJECT_DIR$/src/main/java/prediction.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/SimilarityThreshold.java" afterPath="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/SimilarityThreshold.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/Stem.java" afterPath="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/Stem.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/getDocumentFrequency.java" afterPath="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/GetDocumentFrequency.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/javaLSA.java" afterPath="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/JavaLSA.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/javaLSA_v2.java" afterPath="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/JavaLSA_v2.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/manageMappings.java" afterPath="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/ManageMappings.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/prediction.java" afterPath="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/task/Prediction.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/readNewsblaster.java" afterPath="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/ReadNewsblaster.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/train.java" afterPath="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/Train.java" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/wekaSVM.java" afterPath="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/WekaSVM.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/util/EventQAConfig.java" afterPath="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/util/EventQAConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="EventQA.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/pom.xml" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1370971962109" ignored="false" />
-    <file path="/Dummy.txt" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1370980686825" ignored="false" />
-    <file path="/fragment.java" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1370974595267" ignored="false" />
+    <file path="/Dummy.txt" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1371050572482" ignored="false" />
+    <file path="/fragment.java" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1371052223537" ignored="false" />
     <file path="/HandleStopTest.java" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1370974487098" ignored="false" />
     <file path="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/util/StopWordFilterTest.java" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1370974570765" ignored="false" />
     <file path="/StopWordFilterTest.java" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1370974768215" ignored="false" />
     <file path="/javaLSA.java" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1370974852700" ignored="false" />
-    <file path="$PROJECT_DIR$/../Event/.idea/workspace.xml" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1371050084997" ignored="false" />
+    <file path="$PROJECT_DIR$/../Event/.idea/workspace.xml" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1371051283350" ignored="false" />
     <file path="/stopwords.txt" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1370975353558" ignored="false" />
-    <file path="/prediction.java" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1371050529970" ignored="false" />
+    <file path="/prediction.java" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1371052126662" ignored="false" />
     <file path="/eventqa.properties" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1371049460737" ignored="false" />
     <file path="/EventQAConfig.java" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1371049975053" ignored="false" />
+    <file path="/ManageMappings.java" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1371051978220" ignored="false" />
+    <file path="/Prediction.java" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1371052078509" ignored="false" />
+    <file path="/WekaSVM.java" changelist="63eb3cb6-8559-465c-b08c-288ab96c2f1e" time="1371052117126" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +81,22 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <line_breakpoints>
+      <breakpoint url="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/ManageMappings.java" line="2" class="ManageMappings.java" package="">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+    </line_breakpoints>
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -80,52 +106,51 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="StopWordFilter.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/util/StopWordFilter.java">
+      <file leaf-file-name="Prediction.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/task/Prediction.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="15" selection-start="318" selection-end="318" vertical-scroll-proportion="0.0">
+            <state line="261" column="27" selection-start="8260" selection-end="8260" vertical-scroll-proportion="0.22191781">
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#5895#5903#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StopWordFilterTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/java/edu/columbia/cs/event/qa/util/StopWordFilterTest.java">
+      <file leaf-file-name="SimilarityThreshold.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/SimilarityThreshold.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="36" selection-start="409" selection-end="409" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="javaLSA.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/javaLSA.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="33" selection-start="861" selection-end="861" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="javaLSA_v2.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/javaLSA_v2.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="67" selection-start="1252" selection-end="1252" vertical-scroll-proportion="0.0">
+            <state line="506" column="52" selection-start="12542" selection-end="12542" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="prediction.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/prediction.java">
+      <file leaf-file-name="Stem.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/Stem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="302" column="62" selection-start="7697" selection-end="7697" vertical-scroll-proportion="0.2042042">
+            <state line="4" column="13" selection-start="108" selection-end="108" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ManageMappings.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/ManageMappings.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="9" column="11" selection-start="192" selection-end="192" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Properties.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar:///usr/lib/jvm/jdk1.7.0/src.zip!/java/util/Properties.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="342" column="0" selection-start="13995" selection-end="13995" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -143,7 +168,7 @@
       <file leaf-file-name="EventQAConfig.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/util/EventQAConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="0" selection-start="397" selection-end="397" vertical-scroll-proportion="-0.3">
+            <state line="32" column="87" selection-start="827" selection-end="827" vertical-scroll-proportion="-4.14">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -151,11 +176,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wekaSVM.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/wekaSVM.java">
+      <file leaf-file-name="WekaSVM.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/WekaSVM.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="6" selection-start="314" selection-end="314" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="16" column="11" selection-start="374" selection-end="374" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#873#881#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -163,16 +191,16 @@
       <file leaf-file-name="stopwords.txt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/stopwords.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="17" selection-start="43" selection-end="43" vertical-scroll-proportion="-1.8">
+            <state line="6" column="10" selection-start="43" selection-end="43" vertical-scroll-proportion="-1.8">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="train.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/train.java">
+      <file leaf-file-name="Train.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/Train.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="31" selection-start="1064" selection-end="1064" vertical-scroll-proportion="0.0">
+            <state line="39" column="31" selection-start="1185" selection-end="1185" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -197,20 +225,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/readNewsblaster.java" />
-        <option value="$PROJECT_DIR$/src/main/java/getDocumentFrequency.java" />
-        <option value="$PROJECT_DIR$/src/main/java/handleStop.java" />
-        <option value="$PROJECT_DIR$/src/main/java/HandleStop.java" />
         <option value="$PROJECT_DIR$/src/test/java/HandleStopTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/util/StopWordFilterTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/edu/columbia/cs/event/qa/util/StopWordFilterTest.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/javaLSA.java" />
         <option value="$PROJECT_DIR$/src/main/resources/stopwords.txt" />
-        <option value="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/util/EventQAConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/util/StopWordFilter.java" />
         <option value="$PROJECT_DIR$/src/main/resources/eventqa.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/util/EventQAConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/prediction.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Prediction.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ManageMappings.java" />
+        <option value="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/ManageMappings.java" />
+        <option value="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/WekaSVM.java" />
+        <option value="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/task/Prediction.java" />
+        <option value="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/SimilarityThreshold.java" />
       </list>
     </option>
   </component>
@@ -331,6 +361,10 @@
               <option name="myItemId" value="java" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="qa" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -354,33 +388,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="readNewsblaster.java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EventQA" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EventQA" />
+              <option name="myItemId" value="qa" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="util" />
+              <option name="myItemId" value="task" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -398,6 +410,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EventQA" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EventQA" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value=".idea" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -405,7 +431,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_directory_selection" value="$PROJECT_DIR$/src/test/java" />
+    <property name="last_directory_selection" value="$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa" />
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit3" />
@@ -436,8 +462,123 @@
       <recent name="$PROJECT_DIR$/src/main/java" />
       <recent name="$PROJECT_DIR$/lib" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="edu.columbia.cs.event.qa" />
+    </key>
   </component>
-  <component name="RunManager" selected="JUnit.StopWordFilterTest">
+  <component name="RestoreUpdateTree">
+    <UpdateInfo date="Moments ago" ActionInfo="_Update">
+      <UpdatedFiles>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Updated from server" />
+          <option name="myStatusName" value="Changed on server" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="CHANGED_ON_SERVER" />
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Updated" />
+            <option name="myStatusName" value="Changed" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="UPDATED" />
+            <PATH vcs="Git" revision="">$PROJECT_DIR$/src/main/java/prediction.java</PATH>
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Created" />
+            <option name="myStatusName" value="Created" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="CREATED" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Deleted" />
+            <option name="myStatusName" value="Deleted" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="true" />
+            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
+          </FILE-GROUP>
+          <FILE-GROUP>
+            <option name="myUpdateName" value="Restored" />
+            <option name="myStatusName" value="Will be restored" />
+            <option name="mySupportsDeletion" value="false" />
+            <option name="myCanBeAbsent" value="false" />
+            <option name="myId" value="RESTORED" />
+          </FILE-GROUP>
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Modified" />
+          <option name="myStatusName" value="Modified" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MODIFIED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Skipped" />
+          <option name="myStatusName" value="Skipped" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SKIPPED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with conflicts" />
+          <option name="myStatusName" value="Will be merged with conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_CONFLICTS" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with tree conflicts" />
+          <option name="myStatusName" value="Merged with tree conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged with property conflicts" />
+          <option name="myStatusName" value="Will be merged with property conflicts" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Merged" />
+          <option name="myStatusName" value="Will be merged" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="MERGED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Not in repository" />
+          <option name="myStatusName" value="Not in repository" />
+          <option name="mySupportsDeletion" value="true" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="UNKNOWN" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally added" />
+          <option name="myStatusName" value="Locally added" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_ADDED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Locally removed" />
+          <option name="myStatusName" value="Locally removed" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="LOCALLY_REMOVED" />
+        </FILE-GROUP>
+        <FILE-GROUP>
+          <option name="myUpdateName" value="Switched" />
+          <option name="myStatusName" value="Switched" />
+          <option name="mySupportsDeletion" value="false" />
+          <option name="myCanBeAbsent" value="false" />
+          <option name="myId" value="SWITCHED" />
+        </FILE-GROUP>
+      </UpdatedFiles>
+    </UpdateInfo>
+  </component>
+  <component name="RunManager" selected="Application.Prediction">
     <configuration default="false" name="StopWordFilterTest" type="JUnit" factoryName="JUnit" temporary="true">
       <module name="EventQA" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -456,6 +597,22 @@
       </option>
       <envs />
       <patterns />
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Prediction" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="edu.columbia.cs.event.qa.task.Prediction" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="EventQA" />
+      <envs />
       <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Run" />
       <method />
@@ -548,12 +705,14 @@
       <patterns />
       <method />
     </configuration>
-    <list size="1">
+    <list size="2">
       <item index="0" class="java.lang.String" itemvalue="JUnit.StopWordFilterTest" />
+      <item index="1" class="java.lang.String" itemvalue="Application.Prediction" />
     </list>
     <recent_temporary>
-      <list size="1">
-        <item index="0" class="java.lang.String" itemvalue="JUnit.StopWordFilterTest" />
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="Application.Prediction" />
+        <item index="1" class="java.lang.String" itemvalue="JUnit.StopWordFilterTest" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -602,7 +761,11 @@
       <created>1370980689950</created>
       <updated>1370980689950</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Added a properties file and Config object for managing resources.">
+      <created>1371050578989</created>
+      <updated>1371050578989</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -612,21 +775,21 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18543047" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294702" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3294702" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294702" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3294702" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24962063" sideWeight="0.6705298" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23013245" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24962063" sideWeight="0.7235099" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27649006" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
     </layout>
@@ -669,7 +832,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="No comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a properties file and Config object for managing resources." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -686,6 +849,7 @@
     <MESSAGE value="Adding intelij project file and maven pom.xml" />
     <MESSAGE value="Added refactored stopWords into StopWordFilter and made a test for it. I will have Greg reimplement this with a set, instead of a long chain of boolean statements." />
     <MESSAGE value="No comment" />
+    <MESSAGE value="Added a properties file and Config object for managing resources." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -695,16 +859,7 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/readNewsblaster.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="310" column="8" selection-start="9004" selection-end="9004" vertical-scroll-proportion="-12.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/getDocumentFrequency.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/GetDocumentFrequency.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="13" column="13" selection-start="327" selection-end="327" vertical-scroll-proportion="0.0">
           <folding />
@@ -731,14 +886,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/edu/columbia/cs/event/qa/util/StopWordFilterTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="36" selection-start="409" selection-end="409" vertical-scroll-proportion="0.0">
+        <state line="19" column="0" selection-start="409" selection-end="409" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/javaLSA.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/JavaLSA.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="29" column="33" selection-start="861" selection-end="861" vertical-scroll-proportion="0.0">
           <folding>
@@ -747,9 +902,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/javaLSA_v2.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/JavaLSA_v2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="67" selection-start="1252" selection-end="1252" vertical-scroll-proportion="0.0">
+        <state line="41" column="5" selection-start="1252" selection-end="1252" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar:///usr/lib/jvm/jdk1.7.0/src.zip!/java/util/Properties.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="342" column="0" selection-start="13995" selection-end="13995" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -763,38 +925,67 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/util/EventQAConfig.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="397" selection-end="397" vertical-scroll-proportion="-0.3">
+        <state line="32" column="87" selection-start="827" selection-end="827" vertical-scroll-proportion="-4.14">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/wekaSVM.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="6" selection-start="314" selection-end="314" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/stopwords.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="17" selection-start="43" selection-end="43" vertical-scroll-proportion="-1.8">
+        <state line="6" column="10" selection-start="43" selection-end="43" vertical-scroll-proportion="-1.8">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/train.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/Train.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="31" selection-start="1064" selection-end="1064" vertical-scroll-proportion="0.0">
+        <state line="39" column="31" selection-start="1185" selection-end="1185" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/prediction.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/ManageMappings.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="302" column="62" selection-start="7697" selection-end="7697" vertical-scroll-proportion="0.2042042">
+        <state line="9" column="11" selection-start="192" selection-end="192" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/Stem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="13" selection-start="108" selection-end="108" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/WekaSVM.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="11" selection-start="374" selection-end="374" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#873#881#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/SimilarityThreshold.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="506" column="52" selection-start="12542" selection-end="12542" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/edu/columbia/cs/event/qa/task/Prediction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="261" column="27" selection-start="8260" selection-end="8260" vertical-scroll-proportion="0.22191781">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5895#5903#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

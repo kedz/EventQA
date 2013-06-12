@@ -1,11 +1,13 @@
+package edu.columbia.cs.event.qa;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class manageMappings
+public class ManageMappings
 {
 	static Map<String, String> expander=new HashMap<String, String>();
 	
-	static String replaceTokens(String doc)
+	public static String replaceTokens(String doc)
 	{
 		doc=doc.replaceAll("U.S.", "United States");
 		doc=doc.replaceAll("US", "United States");

@@ -1,12 +1,15 @@
+package edu.columbia.cs.event.qa;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import edu.columbia.cs.event.qa.Train;
 import org.jblas.DoubleMatrix;
 import org.jblas.Singular;
 import org.jblas.Solve;
 
-class javaLSA
+class JavaLSA
 {
 	public static DoubleMatrix TxT;
 	public static DoubleMatrix semantic;
@@ -130,17 +133,17 @@ class javaLSA
 		System.out.println("Reading Corpus");
 		String trainFile="/proj/fluke/users/shreya2k7/newsblaster/training2007.txt";
 		try{
-			train.readTrainingData(trainFile);
+			Train.readTrainingData(trainFile);
 		} catch(IOException e)
 		{
 			e.printStackTrace();
 		}	
 		System.out.println("Building Matrix");
-		train.buildTxDMatrixDM();
+		Train.buildTxDMatrixDM();
 		System.out.println("Printing Stats");
-		train.saveTxDAsFile();	
+		Train.saveTxDAsFile();
 		System.out.println("Starting Building Space");
-		decomposeMatrix(train.TxDMatrix);
+		decomposeMatrix(Train.TxDMatrix);
 		System.out.println("Done Building Space");
 		System.out.println("Text matrix");
 		System.out.println(TxT.rows+"-"+TxT.columns);

@@ -1,3 +1,5 @@
+package edu.columbia.cs.event.qa;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -8,10 +10,12 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.Map.Entry;
 
+import edu.columbia.cs.event.qa.ManageMappings;
+import edu.columbia.cs.event.qa.Stem;
 import edu.columbia.cs.event.qa.util.StopWordFilter;
 import org.jblas.DoubleMatrix;
 
-class train
+class Train
 {
 	static String delims = " \r\n\t()"; 
 	//static PrintWriter pW;
@@ -88,7 +92,7 @@ class train
 	static ArrayList<String> preprocessDoc(String s)
 	{
 		String DOC=s.replace("\"", "");
-		DOC=manageMappings.replaceTokens(DOC);
+		DOC= ManageMappings.replaceTokens(DOC);
 		DOC=DOC.replaceAll("'s", "");	
 		DOC=DOC.replaceAll("\n", " ");
 		DOC=DOC.replaceAll("\\s+", " ");
@@ -109,7 +113,7 @@ class train
 			if (!s.trim().equals(""))
 			{
 				s= StopWordFilter.filter(s);
-				s=Stem.stemmer(s);
+				s= Stem.stemmer(s);
 				if (!s.equals(""))
 				{
 					strTokens.add(s);

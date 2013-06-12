@@ -1,3 +1,5 @@
+package edu.columbia.cs.event.qa;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
@@ -7,6 +9,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 
@@ -28,7 +31,7 @@ class TextFileFilter implements FileFilter
     }
 }
 
-class readNewsblaster
+class ReadNewsblaster
 {
 	static ArrayList<String> eventKeywords=new ArrayList<String>();
 	static Map<String, String> summaries=new HashMap<String, String>();

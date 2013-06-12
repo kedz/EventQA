@@ -1,3 +1,5 @@
+package edu.columbia.cs.event.qa;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -8,7 +10,7 @@ import org.jblas.DoubleMatrix;
 import org.jblas.Singular;
 import org.jblas.Solve;
 
-class javaLSA_v2
+class JavaLSA_v2
 {
 	public static DoubleMatrix TxD;
 	public static DoubleMatrix TxT;

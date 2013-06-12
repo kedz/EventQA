@@ -1,3 +1,5 @@
+package edu.columbia.cs.event.qa.task;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -7,10 +9,14 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+import edu.columbia.cs.event.qa.ManageMappings;
+import edu.columbia.cs.event.qa.Stem;
+import edu.columbia.cs.event.qa.util.EventQAConfig;
 import edu.columbia.cs.event.qa.util.StopWordFilter;
+import edu.columbia.cs.event.qa.WekaSVM;
 import org.jblas.DoubleMatrix;
 
-public class prediction {
+public class Prediction {
 
     static String delims = " \r\n\t()";
     static ArrayList<String> terms = new ArrayList<String>();
@@ -58,7 +64,7 @@ public class prediction {
 
     static ArrayList<String> preprocessDoc (String s) {
         String DOC = s.replace("\"", "");
-        DOC = manageMappings.replaceTokens(DOC);
+        DOC = ManageMappings.replaceTokens(DOC);
         DOC = DOC.replaceAll("'s", "");
         DOC = DOC.replaceAll("\n", " ");
         DOC = DOC.replaceAll("\\s+", " ");
@@ -79,7 +85,7 @@ public class prediction {
             if (!s.trim().equals(""))
             {
                 s= StopWordFilter.filter(s);
-                s=Stem.stemmer(s);
+                s= Stem.stemmer(s);
                 if (!s.equals(""))
                 {
                     strTokens.add(s);
@@ -202,7 +208,7 @@ public class prediction {
 
         // TODO Load parameters instead of training classifier each time (getPredictedClass)
 
-        for(String s: wekaSVM.getPredictedClass(trainWekaFile, testWekaFile)) {
+        for(String s: WekaSVM.getPredictedClass(trainWekaFile, testWekaFile)) {
             System.out.println("**Ans"+c+":"+QA[c]);
             System.out.println("Similarity:"+sims.get(c-1));
             System.out.println("Prediction:"+s);
@@ -255,7 +261,7 @@ public class prediction {
 
         StringBuilder summary=new StringBuilder();
         StringBuilder notChosen=new StringBuilder();
-        ArrayList<String> predictions=wekaSVM.getPredictedClass(trainFName, testFName);
+        ArrayList<String> predictions= WekaSVM.getPredictedClass(trainFName, testFName);
         if (predictions.size()!=actualStr.size())
         {
             System.out.println("NOT SAME");
@@ -287,15 +293,17 @@ public class prediction {
 
     public static void main (String args[]) throws Exception {
 
-        // TODO Load eventQA properties
-        String vocabFileName = args[0];
-        String spaceFileName = args[1];
-        String testInputFileName = args[2];
-        String trainWekaFile = args[3];
-        String testWekaFile = args[4];
+        EventQAConfig config = EventQAConfig.getInstance();
 
-        int eigenVecs = Integer.parseInt(args[5]);
-        int mode = Integer.parseInt(args[6]);
+        // TODO Load eventQA properties
+        String vocabFileName = config.getProperty("vocab.file");
+        String spaceFileName = config.getProperty("semantic.space.file");
+        String testInputFileName = config.getProperty("test.file");
+        String trainWekaFile = config.getProperty("weka.training.file");
+        String testWekaFile = config.getProperty("weka.testing.file");
+
+        int eigenVecs = Integer.parseInt(config.getProperty("number.of.eigenvectors"));
+        int mode = Integer.parseInt(config.getProperty("mode"));
 
         readTerms(vocabFileName);
         readSpace(spaceFileName, eigenVecs);

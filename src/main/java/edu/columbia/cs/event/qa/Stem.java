@@ -1,3 +1,5 @@
+package edu.columbia.cs.event.qa;
+
 import com.aliasi.tokenizer.PorterStemmerTokenizerFactory;
 
 public class Stem

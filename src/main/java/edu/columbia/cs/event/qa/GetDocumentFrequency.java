@@ -1,7 +1,10 @@
+package edu.columbia.cs.event.qa;
+
+import edu.columbia.cs.event.qa.Train;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +14,7 @@ import java.util.Map.Entry;
 /**
  * This Class Computes the Document Frequency for each Term
  */
-public class getDocumentFrequency	{
+public class GetDocumentFrequency {
 	
 	public static ArrayList<String> terms=new ArrayList<String>();
 	public static Map<String, Double> df=new HashMap<String, Double>();
@@ -43,7 +46,7 @@ public class getDocumentFrequency	{
 		int cnt2=0;
 		while ((docLine=bRdr.readLine())!=null)
 		{
-			ArrayList<String> allTokens=train.preprocessDoc(docLine);
+			ArrayList<String> allTokens= Train.preprocessDoc(docLine);
 			for(String t: terms)
 			{
 				if (allTokens.contains(t))
