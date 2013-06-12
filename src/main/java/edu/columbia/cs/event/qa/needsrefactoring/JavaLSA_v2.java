@@ -1,4 +1,4 @@
-package edu.columbia.cs.event.qa;
+package edu.columbia.cs.event.qa.needsrefactoring;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -40,7 +40,7 @@ class JavaLSA_v2
 		System.out.println("space:"+space.rows+"-"+space.columns);		
 	}
 	
-	static void printDM(DoubleMatrix x)
+	public static void printDM(DoubleMatrix x)
 	{
 		for(int i = 0; i <x.rows; i++)
 		{
@@ -48,12 +48,12 @@ class JavaLSA_v2
 		}
 	}
 	
-	static DoubleMatrix foldingIn(DoubleMatrix sentence) throws Exception  //pinv(S)*transpose(U)*sent
+	public static DoubleMatrix foldingIn(DoubleMatrix sentence) throws Exception  //pinv(S)*transpose(U)*sent
 	{			
 		return space.mmul(sentence);
 	}
 	
-	static void saveSpace(String outputFile) throws IOException
+	public static void saveSpace(String outputFile) throws IOException
 	{
 		FileWriter fW=new FileWriter(outputFile);
 		PrintWriter pW=new PrintWriter(fW);
@@ -75,7 +75,7 @@ class JavaLSA_v2
 		fW.close();
 	}
 	
-	static void readMatrix(String fName, int termCount) throws Exception
+	public static void readMatrix(String fName, int termCount) throws Exception
 	{		
 		FileReader fR=new FileReader(fName);
 		BufferedReader bR=new BufferedReader(fR);

@@ -1,4 +1,4 @@
-package edu.columbia.cs.event.qa;
+package edu.columbia.cs.event.qa.needsrefactoring;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -10,12 +10,10 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 import java.util.Map.Entry;
 
-import edu.columbia.cs.event.qa.ManageMappings;
-import edu.columbia.cs.event.qa.Stem;
 import edu.columbia.cs.event.qa.util.StopWordFilter;
 import org.jblas.DoubleMatrix;
 
-class Train
+public class Train
 {
 	static String delims = " \r\n\t()"; 
 	//static PrintWriter pW;
@@ -89,7 +87,7 @@ class Train
 		System.out.println("Total number of documents:"+numDoc);
 	}	
 
-	static ArrayList<String> preprocessDoc(String s)
+	public static ArrayList<String> preprocessDoc(String s)
 	{
 		String DOC=s.replace("\"", "");
 		DOC= ManageMappings.replaceTokens(DOC);
@@ -105,7 +103,7 @@ class Train
 		return allTokens;
 	}
 
-	static ArrayList<String> Split(String str) {   		//Extract Tokens into a ArrayList
+	public static ArrayList<String> Split(String str) {   		//Extract Tokens into a ArrayList
 		ArrayList<String> strTokens = new ArrayList<String>();
 		StringTokenizer st = new StringTokenizer(str, delims, true);
 		while (st.hasMoreTokens()) {
@@ -123,7 +121,7 @@ class Train
 		return strTokens;        	
 	}
 
-	static void saveTxDAsFile() throws IOException
+	public static void saveTxDAsFile() throws IOException
 	{		
 		System.out.println("********** Printin Corpus Stats *********");
 
@@ -156,7 +154,7 @@ class Train
 		
 	}
 
-	static void buildandSaveTxDMatrix() throws Exception
+	public static void buildandSaveTxDMatrix() throws Exception
 	{
 		FileWriter fWCS=new FileWriter("/proj/fluke/users/shreya2k7/newsblaster/MatrixFull2805.txt");
 		PrintWriter pWCS=new PrintWriter(fWCS);
@@ -218,7 +216,7 @@ class Train
 		fWCS.close();
 	}
 	
-	static void buildTxDMatrixDM() throws Exception
+	public static void buildTxDMatrixDM() throws Exception
 	{				
 		//TxDMatrix=new double[vocab.size()][numDoc];
 		TxDMatrix = DoubleMatrix.zeros(vocab.size(), numDoc);	
@@ -244,7 +242,7 @@ class Train
 		
 	}
 	
-	static double getCount(String vocab, ArrayList<String> terms)
+	public static double getCount(String vocab, ArrayList<String> terms)
 	{
 		double count=0.0;
 		
@@ -259,7 +257,7 @@ class Train
 		return count;
 	}
 
-	static void testing()
+	public static void testing()
 	{
 		String str="Alaska certifies Sen. Murkowski's re-election`Sen. Alaska Lisa Murkowski was officially named the winner of Alaska's U.S. Senate race Thursday, following a period of legal fights and limbo that lasted longer than the write-in campaign she waged to keep her job;Miller's decision , announced at a news conference in Anchorage, came one day after the state certified  Murkowski as the winner";
 		ArrayList<String> allTokens=preprocessDoc(str);

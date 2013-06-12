@@ -1,15 +1,15 @@
-package edu.columbia.cs.event.qa;
+package edu.columbia.cs.event.qa.needsrefactoring;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import edu.columbia.cs.event.qa.Train;
+import edu.columbia.cs.event.qa.needsrefactoring.Train;
 import org.jblas.DoubleMatrix;
 import org.jblas.Singular;
 import org.jblas.Solve;
 
-class JavaLSA
+public class JavaLSA
 {
 	public static DoubleMatrix TxT;
 	public static DoubleMatrix semantic;
@@ -57,7 +57,7 @@ class JavaLSA
 		fW.close();
 	}
 	
-	static void printDM(DoubleMatrix x)
+	public static void printDM(DoubleMatrix x)
 	{
 		for(int i = 0; i <x.rows; i++)
 		{
@@ -65,12 +65,12 @@ class JavaLSA
 		}
 	}
 	
-	static DoubleMatrix foldingIn(DoubleMatrix sentence) throws Exception  //pinv(S)*transpose(U)*sent
+	public static DoubleMatrix foldingIn(DoubleMatrix sentence) throws Exception  //pinv(S)*transpose(U)*sent
 	{			
 		return space.mmul(sentence);
 	}
 	
-	static void saveSpace(String outputFile) throws IOException
+	public static void saveSpace(String outputFile) throws IOException
 	{
 		FileWriter fR=new FileWriter(outputFile);
 		PrintWriter pW=new PrintWriter(fR);

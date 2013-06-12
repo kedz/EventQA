@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
-import edu.columbia.cs.event.qa.ManageMappings;
-import edu.columbia.cs.event.qa.Stem;
-import edu.columbia.cs.event.qa.WekaSMOClassifierFactory;
-import edu.columbia.cs.event.qa.WekaSMOClassifier;
+import edu.columbia.cs.event.qa.needsrefactoring.ManageMappings;
+import edu.columbia.cs.event.qa.needsrefactoring.Stem;
+import edu.columbia.cs.event.qa.classifier.WekaSMOClassifierFactory;
+import edu.columbia.cs.event.qa.classifier.WekaSMOClassifier;
 import edu.columbia.cs.event.qa.util.EventQAConfig;
 import edu.columbia.cs.event.qa.util.StopWordFilter;
 import org.jblas.DoubleMatrix;
