@@ -11,9 +11,10 @@ import java.util.StringTokenizer;
 
 import edu.columbia.cs.event.qa.ManageMappings;
 import edu.columbia.cs.event.qa.Stem;
+import edu.columbia.cs.event.qa.WekaSMOClassifierFactory;
+import edu.columbia.cs.event.qa.WekaSMOClassifier;
 import edu.columbia.cs.event.qa.util.EventQAConfig;
 import edu.columbia.cs.event.qa.util.StopWordFilter;
-import edu.columbia.cs.event.qa.WekaSVM;
 import org.jblas.DoubleMatrix;
 
 public class Prediction {
@@ -21,6 +22,19 @@ public class Prediction {
     static String delims = " \r\n\t()";
     static ArrayList<String> terms = new ArrayList<String>();
     static DoubleMatrix Space;
+
+//    public Prediction () {
+//        EventQAConfig config = EventQAConfig.getInstance();
+//
+//        String vocabFileName = config.getProperty("vocab.file");
+//        String spaceFileName = config.getProperty("semantic.space.file");
+//        String testInputFileName = config.getProperty("test.file");
+//        String trainWekaFile = config.getProperty("weka.training.file");
+//        String testWekaFile = config.getProperty("weka.testing.file");
+//
+//        int eigenVecs = Integer.parseInt(config.getProperty("number.of.eigenvectors"));
+//        int mode = Integer.parseInt(config.getProperty("mode"));
+//    }
 
     static void readTerms (String termFileName) throws Exception {
         System.out.println("Adding terms");
@@ -169,7 +183,18 @@ public class Prediction {
         return sentences;
     }
 
-    static void getFinalSimilarityScoreParaLevel(String trainWekaFile, String QASet, String testWekaFile) throws Exception
+    static void getFinalSimilarityScore (String QAset, String testWekaFile, WekaSMOClassifier classifier, int mode) throws Exception {
+        if (mode == 1) {
+            getFinalSimilarityScoreParaLevel(QAset, testWekaFile, classifier);
+        } else if (mode == 2) {
+            getFinalSimilarityScoreSentenceLevel(QAset, testWekaFile, classifier);
+        } else {
+            System.out.println("Enter correct processing level: (1) for Paragraph level and (2) for Sentence level");
+            System.exit(1);
+        }
+    }
+
+    static void getFinalSimilarityScoreParaLevel(String QASet, String testWekaFile, WekaSMOClassifier classifier) throws Exception
     {
         PrintWriter writer = new PrintWriter(new FileWriter(testWekaFile));
 
@@ -206,9 +231,7 @@ public class Prediction {
         System.out.println("**Query:"+QA[0]);
         int c = 1;
 
-        // TODO Load parameters instead of training classifier each time (getPredictedClass)
-
-        for(String s: WekaSVM.getPredictedClass(trainWekaFile, testWekaFile)) {
+        for (String s : classifier.predict(testWekaFile)) {
             System.out.println("**Ans"+c+":"+QA[c]);
             System.out.println("Similarity:"+sims.get(c-1));
             System.out.println("Prediction:"+s);
@@ -216,7 +239,7 @@ public class Prediction {
         }
     }
 
-    static void getFinalSimilarityScoreSentenceLevel(String trainFName, String QASet, String testFName) throws Exception
+    static void getFinalSimilarityScoreSentenceLevel(String QASet, String testFName, WekaSMOClassifier classifier) throws Exception
     {
         System.out.println("Get Summarization");
         FileWriter fW=new FileWriter(testFName);
@@ -261,7 +284,8 @@ public class Prediction {
 
         StringBuilder summary=new StringBuilder();
         StringBuilder notChosen=new StringBuilder();
-        ArrayList<String> predictions= WekaSVM.getPredictedClass(trainFName, testFName);
+
+        ArrayList<String> predictions = classifier.predict(testFName); //WekaSMOClassifier.getPredictedClass(trainFName, testFName);
         if (predictions.size()!=actualStr.size())
         {
             System.out.println("NOT SAME");
@@ -295,7 +319,6 @@ public class Prediction {
 
         EventQAConfig config = EventQAConfig.getInstance();
 
-        // TODO Load eventQA properties
         String vocabFileName = config.getProperty("vocab.file");
         String spaceFileName = config.getProperty("semantic.space.file");
         String testInputFileName = config.getProperty("test.file");
@@ -309,26 +332,12 @@ public class Prediction {
         readSpace(spaceFileName, eigenVecs);
 
         BufferedReader reader = new BufferedReader(new FileReader(testInputFileName));
-		
-		/*
-		readTerms("/bolt/ir2/columbia/EventQA/training_Vocab_Full.txt");
-		readSpace("/bolt/ir2/columbia/EventQA/Space.txt", eigenVecs);
-		BufferedReader bR=new BufferedReader(new FileReader("/bolt/ir2/columbia/EventQA/Test_QA_Input.txt"));
+        WekaSMOClassifierFactory factory = new WekaSMOClassifierFactory ();
+        WekaSMOClassifier classifier = factory.getWekaSMOClassifier();
 
-		String trainfName="/bolt/ir2/columbia/EventQA/train.arff";		
-		String testFName="/bolt/ir2/columbia/EventQA/test.arff";
-		*/
-
-        String QASet = "";
+        String QASet;
         while((QASet = reader.readLine()) != null) {
-            if (mode == 1) {
-                getFinalSimilarityScoreParaLevel(trainWekaFile, QASet, testWekaFile);
-            } else if (mode == 2) {
-                getFinalSimilarityScoreSentenceLevel(trainWekaFile, QASet, testWekaFile);
-            } else {
-                System.out.println("Enter correct processing level: (1) for Paragraph level and (2) for Sentence level");
-                System.exit(1);
-            }
+            getFinalSimilarityScore(QASet, testWekaFile, classifier, mode);
             System.out.println("****************************************************");
         }
     }
