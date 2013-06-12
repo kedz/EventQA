@@ -15,15 +15,15 @@ public class StopWordFilter {
 
     static {
         try {
-        String file = "stopwords.txt";
-        stopwords = new HashSet<String>();
-        InputStream input = ClassLoader.getSystemResourceAsStream(file);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input, "UTF-8"));
-        String line = bufferedReader.readLine();
-        while (line != null) {
-            stopwords.add(line);
-            line = bufferedReader.readLine();
-        }
+            String file = "stopwords.txt";
+            stopwords = new HashSet<String>();
+            InputStream input = ClassLoader.getSystemResourceAsStream(file);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(input, "UTF-8"));
+            String line = bufferedReader.readLine();
+            while (line != null) {
+                stopwords.add(line);
+                line = bufferedReader.readLine();
+            }
         } catch (IOException ioe) {
             ioe.printStackTrace();
             System.exit(-1);

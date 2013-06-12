@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.StringTokenizer;
 
+import edu.columbia.cs.event.qa.util.EventQAConfig;
 import edu.columbia.cs.event.qa.util.StopWordFilter;
 import org.jblas.DoubleMatrix;
 
@@ -202,7 +203,7 @@ public class prediction
 		pW.flush();
 		pW.close();
 		fW.close();
-		
+
 		System.out.println("**Query:"+QA[0]);
 		int cnt=1;
 		for(String s: wekaSVM.getPredictedClass(trainWekaFile, testWekaFile))
@@ -291,15 +292,15 @@ public class prediction
 	
 	public static void main(String args[]) throws Exception
 	{
+        EventQAConfig config = EventQAConfig.getInstance();
 
-
-		String vocabFileName=args[0];
-		String spaceFileName=args[1];
-		String testInputFileName=args[2];
-		String trainWekaFile=args[3];
-		String testWekaFile=args[4];		
-		int eigenVecs=Integer.parseInt(args[5]);
-		int level=Integer.parseInt(args[6]);
+		String vocabFileName = config.getProperty("vocab.file");
+		String spaceFileName = config.getProperty("semantic.space.file");
+		String testInputFileName = config.getProperty("test.file");
+		String trainWekaFile = config.getProperty("weka.training.file");
+		String testWekaFile = config.getProperty("weka.testing.file");
+		int eigenVecs = Integer.parseInt(config.getProperty("number.of.eigenvectors"));
+		int level=Integer.parseInt(config.getProperty("mode"));
 		
 		readTerms(vocabFileName);
 		readSpace(spaceFileName, eigenVecs);
