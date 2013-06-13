@@ -1,4 +1,4 @@
-package edu.columbia.cs.event.qa;
+package edu.columbia.cs.event.qa.classifier;
 
 import edu.columbia.cs.event.qa.util.EventQAConfig;
 import java.io.ObjectOutputStream;

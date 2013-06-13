@@ -1,4 +1,4 @@
-package edu.columbia.cs.event.qa;
+package edu.columbia.cs.event.qa.needsrefactoring;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,8 +11,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import edu.columbia.cs.event.qa.ManageMappings;
-import edu.columbia.cs.event.qa.Stem;
 import edu.columbia.cs.event.qa.util.StopWordFilter;
 import org.jblas.DoubleMatrix;
 

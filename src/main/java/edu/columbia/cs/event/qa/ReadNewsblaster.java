@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import edu.columbia.cs.event.qa.needsrefactoring.Stem;
 import org.jdom2.Document;
 import org.jdom2.Element;
 

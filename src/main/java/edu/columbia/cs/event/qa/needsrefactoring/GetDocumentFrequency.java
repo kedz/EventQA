@@ -1,6 +1,6 @@
-package edu.columbia.cs.event.qa;
+package edu.columbia.cs.event.qa.needsrefactoring;
 
-import edu.columbia.cs.event.qa.Train;
+import edu.columbia.cs.event.qa.needsrefactoring.Train;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

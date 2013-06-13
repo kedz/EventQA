@@ -1,4 +1,4 @@
-package edu.columbia.cs.event.qa;
+package edu.columbia.cs.event.qa.classifier;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

@@ -1,4 +1,4 @@
-package edu.columbia.cs.event.qa;
+package edu.columbia.cs.event.qa.needsrefactoring;
 
 import com.aliasi.tokenizer.PorterStemmerTokenizerFactory;
 
