@@ -39,16 +39,6 @@ public class Prediction {
         this.terms = new ArrayList<String>();
     }
 
-    public void load () throws Exception {
-        System.out.print("Loading Terms Vector... ");
-        loadTerms();
-        System.out.print("Done\nLoading Semantic Space Matrix... ");
-        loadSemanticSpaceMatrix();
-        System.out.print("Done\nLoading Classifier... ");
-        loadClassifier();
-        System.out.println("Done");
-    }
-
     private void loadConfigurations () {
         EventQAConfig config = EventQAConfig.getInstance();
         this.termFileName = config.getProperty("vocab.file");
@@ -254,34 +244,26 @@ public class Prediction {
         System.out.println("Total number of sentences seen: "+cnt);
         System.out.println("Valid sentences: "+actualStr.size());
 
-        StringBuilder summary=new StringBuilder();
-        StringBuilder notChosen=new StringBuilder();
+        StringBuilder summary = new StringBuilder();
+        StringBuilder notChosen = new StringBuilder();
 
-        ArrayList<String> predictions = classifier.predict(testWekaFile); //WekaSMOClassifier.getPredictedClass(trainFName, testFName);
-        if (predictions.size()!=actualStr.size())
-        {
+        ArrayList<String> predictions = classifier.predict(testWekaFile);
+
+        if (predictions.size()!=actualStr.size()) {
             System.out.println("NOT SAME");
             System.out.println(predictions.size()+"!="+actualStr.size());
             System.exit(0);
-        }
-        else
-        {
-            for (int i=0;i<predictions.size();i++)
-            {
-                if (predictions.get(i).equals("yes"))
-                {
+        } else {
+            for (int i=0;i<predictions.size();i++) {
+                if (predictions.get(i).equals("yes")) {
                     summary.append(actualStr.get(i));
-                }
-                else
-                {
+                } else {
                     notChosen.append(actualStr.get(i));
                 }
             }
         }
 
-        for (String s: actualStr)
-            System.out.println(s);
-
+        for (String s: actualStr) { System.out.println(s); }
         System.out.println("Chosen:"+summary.toString());
         System.out.println("*******");
         System.out.println("NOT Chosen:"+notChosen.toString());
@@ -298,6 +280,16 @@ public class Prediction {
             sentences.add(source.substring(start,end));
         }
         return sentences;
+    }
+
+    public void load () throws Exception {
+        System.out.print("Loading Terms Vector... ");
+        loadTerms();
+        System.out.print("Done\nLoading Semantic Space Matrix... ");
+        loadSemanticSpaceMatrix();
+        System.out.print("Done\nLoading Classifier... ");
+        loadClassifier();
+        System.out.println("Done");
     }
 
     public void run () throws Exception {
