@@ -9,9 +9,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.StringTokenizer;
 
-import edu.columbia.cs.event.qa.util.StopWordFilter;
+import edu.columbia.cs.event.qa.util.Preprocessor;
 import org.jblas.DoubleMatrix;
 
 public class SimilarityThreshold
@@ -23,6 +22,7 @@ public class SimilarityThreshold
 	static Map<Integer, ArrayList<String>> summaries=new HashMap<Integer, ArrayList<String>>();
 	static Map<Integer, ArrayList<ArrayList<String>>> summarySentences=new HashMap<Integer, ArrayList<ArrayList<String>>>();
 	static DoubleMatrix Space;
+    static Preprocessor preprocessor = new Preprocessor();
 
 	static void readTermDocs(String termFileName, String docFileName, int level) throws Exception
 	{
@@ -49,20 +49,20 @@ public class SimilarityThreshold
 		{
 			String[] quesAns=data.split("`");
 			try{
-				titles.add(preprocessDoc(quesAns[0]));
+				titles.add(preprocessor.run(quesAns[0]));
 
 				if (level==2)   //Sentence Level
 				{
 					ArrayList<ArrayList<String>> summarySent=new ArrayList<ArrayList<String>>();
 					for (String each: sentenceSplitter(quesAns[1]))
 					{
-						summarySent.add(preprocessDoc(each));
+						summarySent.add(preprocessor.run(each));
 					}
 					summarySentences.put(cnt, summarySent);
 				}
 				else if (level==1)  // Paragraph level
 				{
-					summaries.put(cnt, preprocessDoc(quesAns[1]));
+					summaries.put(cnt, preprocessor.run(quesAns[1]));
 				}
 				else
 				{
@@ -110,39 +110,39 @@ public class SimilarityThreshold
 		return count;
 	}
 
-	static ArrayList<String> preprocessDoc(String s)
-	{
-		String DOC=s.replace("\"", "");
-		DOC= ManageMappings.replaceTokens(DOC);
-		DOC=DOC.replaceAll("'s", "");	
-		DOC=DOC.replaceAll("\n", " ");
-		DOC=DOC.replaceAll("\\s+", " ");
-		DOC=DOC.replaceAll("\\s$", "");
-		DOC=DOC.replaceAll("^\\s", "");
-		DOC=DOC.replaceAll("\\p{Punct}", " ");
-		DOC=DOC.toLowerCase();	
-		ArrayList<String> allTokens = Split(DOC);
-
-		return allTokens;
-	}
-
-	static ArrayList<String> Split(String str) {   		//Extract Tokens into a ArrayList
-		ArrayList<String> strTokens = new ArrayList<String>();
-		StringTokenizer st = new StringTokenizer(str, delims, true);
-		while (st.hasMoreTokens()) {
-			String s = st.nextToken();
-			if (!s.trim().equals(""))
-			{
-				s= StopWordFilter.filter(s);
-				s= Stem.stemmer(s);
-				if (!s.equals(""))
-				{
-					strTokens.add(s);
-				}
-			}
-		}
-		return strTokens;        	
-	}
+//	static ArrayList<String> preprocessDoc(String s)
+//	{
+//		String DOC=s.replace("\"", "");
+//		DOC= ManageMappings.replaceTokens(DOC);
+//		DOC=DOC.replaceAll("'s", "");
+//		DOC=DOC.replaceAll("\n", " ");
+//		DOC=DOC.replaceAll("\\s+", " ");
+//		DOC=DOC.replaceAll("\\s$", "");
+//		DOC=DOC.replaceAll("^\\s", "");
+//		DOC=DOC.replaceAll("\\p{Punct}", " ");
+//		DOC=DOC.toLowerCase();
+//		ArrayList<String> allTokens = Split(DOC);
+//
+//		return allTokens;
+//	}
+//
+//	static ArrayList<String> Split(String str) {   		//Extract Tokens into a ArrayList
+//		ArrayList<String> strTokens = new ArrayList<String>();
+//		StringTokenizer st = new StringTokenizer(str, delims, true);
+//		while (st.hasMoreTokens()) {
+//			String s = st.nextToken();
+//			if (!s.trim().equals(""))
+//			{
+//				s= StopWordFilter.filter(s);
+//				s= Stem.stemmer(s);
+//				if (!s.equals(""))
+//				{
+//					strTokens.add(s);
+//				}
+//			}
+//		}
+//		return strTokens;
+//	}
 
 	static double dotprod(double[] d1, double[] d2)
 	{

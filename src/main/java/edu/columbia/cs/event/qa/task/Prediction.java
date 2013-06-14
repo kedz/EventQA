@@ -7,20 +7,17 @@ import java.io.PrintWriter;
 import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.StringTokenizer;
-
-import edu.columbia.cs.event.qa.needsrefactoring.ManageMappings;
-import edu.columbia.cs.event.qa.needsrefactoring.Stem;
 import edu.columbia.cs.event.qa.classifier.WekaSMOClassifierFactory;
 import edu.columbia.cs.event.qa.classifier.WekaSMOClassifier;
 import edu.columbia.cs.event.qa.util.EventQAConfig;
-import edu.columbia.cs.event.qa.util.StopWordFilter;
+import edu.columbia.cs.event.qa.util.Preprocessor;
 import org.jblas.DoubleMatrix;
 
 public class Prediction {
 
-    static String delims = " \r\n\t()";
+    private Preprocessor preprocessor;
 
+    /* Configurations */
     private String termFileName;
     private String spaceFileName;
     private String testInputFileName;
@@ -29,13 +26,14 @@ public class Prediction {
     private int numEigenVectors;
     private int mode;
 
-    public WekaSMOClassifier classifier;
-    public ArrayList<String> terms;
-    public DoubleMatrix semanticSpace;
+    private WekaSMOClassifier classifier;
+    private ArrayList<String> terms;
+    private DoubleMatrix semanticSpace;
 
 
     public Prediction () {
         loadConfigurations();
+        this.preprocessor = new Preprocessor();
         this.terms = new ArrayList<String>();
     }
 
@@ -85,35 +83,6 @@ public class Prediction {
         }
     }
 
-    private ArrayList<String> preprocess (String s) {
-        s = s.replace("\"", "");
-        s = ManageMappings.replaceTokens(s);
-        s = s.replaceAll("'s", "");
-        s = s.replaceAll("\n", " ");
-        s = s.replaceAll("\\s+", " ");
-        s = s.replaceAll("\\s$", "");
-        s = s.replaceAll("^\\s", "");
-        s = s.replaceAll("\\p{Punct}", " ");
-        s = s.toLowerCase();
-        return tokenize(s);
-    }
-
-    private ArrayList<String> tokenize (String s) {
-        ArrayList<String> tokens = new ArrayList<String>();
-        StringTokenizer stokenizer = new StringTokenizer(s, delims, true);
-        while (stokenizer.hasMoreTokens()) {
-            String tok = stokenizer.nextToken();
-            if (!tok.trim().equals("")) {
-                tok = StopWordFilter.filter(tok);
-                tok = Stem.stemmer(tok);
-                if (!tok.equals("")) {
-                    tokens.add(tok);
-                }
-            }
-        }
-        return tokens;
-    }
-
     // TODO Speedup
     private double[] transform (ArrayList<String> tokens) {
         double[] termCounts = new double[terms.size()];
@@ -159,7 +128,7 @@ public class Prediction {
         if (mode == 1) {
             computeSimilarityScoreParagraphLevel(QAset);
         } else if (mode == 2) {
-            System.out.println("Get Summarization");
+            //System.out.println("Get Summarization");
             computeSimilarityScoreSentenceLevel(QAset);
         } else {
             System.out.println("Enter correct processing level: (1) for Paragraph level and (2) for Sentence level");
@@ -179,12 +148,12 @@ public class Prediction {
         // TODO Use different delimeter - readNewsblasterXML
         String[] QA = QASet.split("`");
 
-        double[] query = foldin(transform(preprocess(QA[0])));
+        double[] query = foldin(transform(preprocessor.run(QA[0])));
 
         ArrayList<Double> sims = new ArrayList<Double>();
 
         for (int i=1; i<QA.length; i++) {
-            double[] answer = foldin(transform(preprocess(QA[i])));
+            double[] answer = foldin(transform(preprocessor.run(QA[i])));
             double similarity = computeSimilarityBetweenPair(query, answer);
             sims.add(similarity);
             writer.println(similarity+",yes");
@@ -215,7 +184,7 @@ public class Prediction {
 
         String[] QA = QASet.split("`");
 
-        double[] q = foldin(transform(preprocess(QA[0])));
+        double[] q = foldin(transform(preprocessor.run(QA[0])));
 
         ArrayList<String> actualStr=new ArrayList<String>();
 
@@ -227,7 +196,7 @@ public class Prediction {
             for (String sentence: sentenceSplitter(QA[i]))
             {
                 cnt++;
-                double[] ans=foldin(transform(preprocess(sentence)));
+                double[] ans=foldin(transform(preprocessor.run(sentence)));
                 double similarity=computeSimilarityBetweenPair(q, ans);
                 if (!Double.isNaN(similarity) && !Double.isInfinite(similarity))
                 {

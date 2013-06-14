@@ -1,0 +1,11 @@
+U.S.->United States
+US->United States
+ Co.->Company
+Sen.->Senator
+Gen.->General
+Gov.->Governor
+St.->Saint
+don't->do not
+Don't->Do not
+'s->
+"->

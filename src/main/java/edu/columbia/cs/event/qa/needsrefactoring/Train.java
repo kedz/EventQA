@@ -7,118 +7,139 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 import java.util.Map.Entry;
 
-import edu.columbia.cs.event.qa.util.StopWordFilter;
+import edu.columbia.cs.event.qa.util.Preprocessor;
 import org.jblas.DoubleMatrix;
 
-public class Train
-{
-	static String delims = " \r\n\t()"; 
-	//static PrintWriter pW;
+public class Train {
+
+    static Preprocessor preprocessor;
 
 	static HashMap<String, ArrayList<Integer>> wordDocMapping=new HashMap<String, ArrayList<Integer>>();
 	static HashMap<Integer, ArrayList<String>> documents=new HashMap<Integer, ArrayList<String>>();
 	static ArrayList<String> vocab=new ArrayList<String>();
 	static DoubleMatrix TxDMatrix;
-	//static double[][] TxDMatrix;
 	static int numDoc=0;
 
-	public static void readTrainingData(String fileName) throws IOException 
-	{
-		FileReader fRead=new FileReader(fileName);
-		BufferedReader bRead=new BufferedReader(fRead);
-		int docCNT=0;
-		String data=null;
+    public HashMap<Integer, ArrayList<String>> docIndexMap;
+    public HashMap<String, ArrayList<Integer>> wordSeenInDocMap;
+    public ArrayList<String> terms;
 
-		while((data=bRead.readLine())!=null)
-		{
-			String fragment=data;
-			ArrayList<String> allTokens=preprocessDoc(fragment);			
-			if (allTokens.size()>0)
-			{
-				documents.put(docCNT, allTokens);
-				for (String vocab : allTokens)
-				{
-					if (wordDocMapping.containsKey(vocab))
-					{
-						ArrayList<Integer> existingDocs=wordDocMapping.get(vocab);	
-						if(!existingDocs.contains(docCNT))
-						{
-							existingDocs.add(docCNT);
-							wordDocMapping.put(vocab, existingDocs);
+    public Train () throws IOException {
+        load();
+    }
+
+    public void load () throws IOException {
+        loadTrainingData();
+    }
+
+    public void loadTrainingData () throws IOException { loadTrainingData("/Users/wojo/Documents/eventQA/resources/QApair_text_training_Full.txt"); }
+
+    public void loadTrainingData (String fileName) throws IOException {
+
+        preprocessor = new Preprocessor();
+        docIndexMap = new HashMap<Integer,ArrayList<String>>();
+        wordSeenInDocMap = new HashMap<String, ArrayList<Integer>>();
+        terms = new ArrayList<String>();
+
+        String line; int i = 0;
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+        while ((line = reader.readLine()) != null) {
+
+            ArrayList<String> tokenList = preprocessor.run(line);
+            if (tokenList.size()>0) {
+                docIndexMap.put(i, tokenList);
+
+                for (String word : tokenList) {
+                    if (wordSeenInDocMap.containsKey(word)) {
+                        ArrayList<Integer> existingDocs = wordSeenInDocMap.get(word);
+
+                        if (!existingDocs.contains(i)) {
+                            existingDocs.add(i);
+                            wordSeenInDocMap.put(word, existingDocs);
+                        }
+
+                    } else {
+                        ArrayList<Integer> existingDocs = new ArrayList<Integer>();
+                        existingDocs.add(i);
+                        wordSeenInDocMap.put(word, existingDocs);
+                    }
+                }
+            }
+            if (i%100 == 0) { System.out.println("Read "+i+" documents"); } i++;
+            if (i > 300) break;
+        }
+
+        //PrintWriter writer = new PrintWriter(new FileWriter("/proj/fluke/users/shreya2k7/newsblaster/allTerms2007.txt"));
+
+        for (Entry<String, ArrayList<Integer>> entry: wordSeenInDocMap.entrySet()) {
+            if (entry.getValue().size() > 5) {
+                terms.add(entry.getKey());
+                //writer.println(e.getKey());
+            }
+        }
+
+        //writer.flush();
+        numDoc = i;
+        //writer.close();
+
+        System.out.println("Total number of terms: "+terms.size());
+        System.out.println("Total number of documents: "+numDoc);
+    }
+
+	public static void readTrainingData(String fileName) throws IOException  {
+
+        String line; int i = 0;
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+		while ((line = reader.readLine()) != null) {
+
+			//String fragment = data;
+
+			//ArrayList<String> tokenList = preprocessDoc(line);
+            ArrayList<String> tokenList = preprocessor.run(line);
+
+			if (tokenList.size()>0) {
+
+				documents.put(i, tokenList);
+
+				for (String word : tokenList) {
+
+					if (wordDocMapping.containsKey(word)) {
+
+						ArrayList<Integer> existingDocs = wordDocMapping.get(word);
+
+						if (!existingDocs.contains(i)) {
+							existingDocs.add(i);
+							wordDocMapping.put(word, existingDocs);
 						}
-					}
-					else
-					{
+					} else {
 						ArrayList<Integer> existingDocs=new ArrayList<Integer>();							
-						existingDocs.add(docCNT);
-						wordDocMapping.put(vocab, existingDocs);
+						existingDocs.add(i);
+						wordDocMapping.put(word, existingDocs);
 					}			
 				}
 			}
 			
-			if (docCNT%100==0)
-			{
-				System.out.println("Read "+docCNT+" documents");
-			}
-			docCNT++;
+			if (i%100 == 0) { System.out.println("Read "+i+" documents"); }
+			i++;
 		}
 		
-		FileWriter fW=new FileWriter("/proj/fluke/users/shreya2k7/newsblaster/allTerms2007.txt");
-		PrintWriter pW=new PrintWriter(fW);
+		PrintWriter writer = new PrintWriter(new FileWriter("/proj/fluke/users/shreya2k7/newsblaster/allTerms2007.txt"));
 
-		for (Entry<String, ArrayList<Integer>> e: wordDocMapping.entrySet())
-		{
-			if (e.getValue().size()>5)
-			{
+		for (Entry<String, ArrayList<Integer>> e: wordDocMapping.entrySet()) {
+			if (e.getValue().size()>5) {
 				vocab.add(e.getKey());
-				pW.println(e.getKey());
+                writer.println(e.getKey());
 			}
 		}
 
-		pW.flush();
-		numDoc=docCNT;
-		pW.close();
-		fW.close();
-		
+        writer.flush();
+		numDoc=i;
+        writer.close();
+
 		System.out.println("Total number of terms:"+vocab.size());
 		System.out.println("Total number of documents:"+numDoc);
-	}	
-
-	public static ArrayList<String> preprocessDoc(String s)
-	{
-		String DOC=s.replace("\"", "");
-		DOC= ManageMappings.replaceTokens(DOC);
-		DOC=DOC.replaceAll("'s", "");	
-		DOC=DOC.replaceAll("\n", " ");
-		DOC=DOC.replaceAll("\\s+", " ");
-		DOC=DOC.replaceAll("\\s$", "");
-		DOC=DOC.replaceAll("^\\s", "");
-		DOC=DOC.replaceAll("\\p{Punct}", " ");
-		DOC=DOC.toLowerCase();	
-		ArrayList<String> allTokens = Split(DOC);
-
-		return allTokens;
-	}
-
-	public static ArrayList<String> Split(String str) {   		//Extract Tokens into a ArrayList
-		ArrayList<String> strTokens = new ArrayList<String>();
-		StringTokenizer st = new StringTokenizer(str, delims, true);
-		while (st.hasMoreTokens()) {
-			String s = st.nextToken();
-			if (!s.trim().equals(""))
-			{
-				s= StopWordFilter.filter(s);
-				s= Stem.stemmer(s);
-				if (!s.equals(""))
-				{
-					strTokens.add(s);
-				}
-			}
-		}
-		return strTokens;        	
 	}
 
 	public static void saveTxDAsFile() throws IOException
@@ -260,7 +281,7 @@ public class Train
 	public static void testing()
 	{
 		String str="Alaska certifies Sen. Murkowski's re-election`Sen. Alaska Lisa Murkowski was officially named the winner of Alaska's U.S. Senate race Thursday, following a period of legal fights and limbo that lasted longer than the write-in campaign she waged to keep her job;Miller's decision , announced at a news conference in Anchorage, came one day after the state certified  Murkowski as the winner";
-		ArrayList<String> allTokens=preprocessDoc(str);
+		ArrayList<String> allTokens=preprocessor.run(str);
 
 		for(String s: allTokens)
 		{
@@ -268,17 +289,15 @@ public class Train
 		}
 	}
 
-	public static void main(String args[]) throws Exception
-	{
-		//FileWriter fW=new FileWriter("/proj/fluke/users/shreya2k7/newsblaster/allTerms.txt");
-		//pW=new PrintWriter(fW);
-		String trainFile="/proj/fluke/users/shreya2k7/newsblaster/trainingFull.txt";
-		try{
-			readTrainingData(trainFile);
-		} catch(IOException e)
-		{
-			e.printStackTrace();
-		}		
+	public static void main(String args[]) throws Exception {
+
+        Train bot = new Train ();
+        wordDocMapping = bot.wordSeenInDocMap;
+        documents = bot.docIndexMap;
+        vocab = bot.terms;
+
+        System.exit(5);
+
 		buildandSaveTxDMatrix();	
 		saveTxDAsFile();
 	}

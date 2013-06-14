@@ -46,7 +46,7 @@ public class GetDocumentFrequency {
 		int cnt2=0;
 		while ((docLine=bRdr.readLine())!=null)
 		{
-			ArrayList<String> allTokens= Train.preprocessDoc(docLine);
+			ArrayList<String> allTokens= Train.preprocessor.run(docLine);
 			for(String t: terms)
 			{
 				if (allTokens.contains(t))
