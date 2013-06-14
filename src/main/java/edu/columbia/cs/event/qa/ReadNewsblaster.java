@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.columbia.cs.event.qa.needsrefactoring.Stem;
+import edu.columbia.cs.event.qa.util.Preprocessor;
 import org.jdom2.Document;
 import org.jdom2.Element;
 
@@ -39,36 +39,37 @@ class ReadNewsblaster
 	static String matched;
 	static PrintWriter pW;
 	static PrintWriter pWLog;
+    static Preprocessor preprocessor = new Preprocessor();
 
 	public static void initializeEvents()
 	{
-		eventKeywords.add(Stem.stemmer("election"));
-		eventKeywords.add(Stem.stemmer("bomb"));
-		eventKeywords.add(Stem.stemmer("earthquake"));
-		eventKeywords.add(Stem.stemmer("tornado"));
-		eventKeywords.add(Stem.stemmer("tsunami"));
-		eventKeywords.add(Stem.stemmer("blast"));
-		eventKeywords.add(Stem.stemmer("terrorist"));
-		eventKeywords.add(Stem.stemmer("terrorism"));
-		eventKeywords.add(Stem.stemmer("boston"));
-		eventKeywords.add(Stem.stemmer("marathon"));
-		eventKeywords.add(Stem.stemmer("explosives"));
-		eventKeywords.add(Stem.stemmer("explosive"));
-		eventKeywords.add(Stem.stemmer("war"));
-		eventKeywords.add(Stem.stemmer("osama"));
-		eventKeywords.add(Stem.stemmer("nuclear"));
-		eventKeywords.add(Stem.stemmer("reactor"));
-		eventKeywords.add(Stem.stemmer("radiation"));
-		eventKeywords.add(Stem.stemmer("suspect"));
-		eventKeywords.add(Stem.stemmer("tsarnaev"));
-		eventKeywords.add(Stem.stemmer("watertown"));
-		eventKeywords.add(Stem.stemmer("sandy"));
-		eventKeywords.add(Stem.stemmer("katrina"));
-		eventKeywords.add(Stem.stemmer("japan"));
-		eventKeywords.add(Stem.stemmer("cyclone"));
-		eventKeywords.add(Stem.stemmer("hurricane"));
-		eventKeywords.add(Stem.stemmer("volcano"));
-		eventKeywords.add(Stem.stemmer("volcanic"));
+		eventKeywords.add(preprocessor.stem("election"));
+		eventKeywords.add(preprocessor.stem("bomb"));
+		eventKeywords.add(preprocessor.stem("earthquake"));
+		eventKeywords.add(preprocessor.stem("tornado"));
+		eventKeywords.add(preprocessor.stem("tsunami"));
+		eventKeywords.add(preprocessor.stem("blast"));
+		eventKeywords.add(preprocessor.stem("terrorist"));
+		eventKeywords.add(preprocessor.stem("terrorism"));
+		eventKeywords.add(preprocessor.stem("boston"));
+		eventKeywords.add(preprocessor.stem("marathon"));
+		eventKeywords.add(preprocessor.stem("explosives"));
+		eventKeywords.add(preprocessor.stem("explosive"));
+		eventKeywords.add(preprocessor.stem("war"));
+		eventKeywords.add(preprocessor.stem("osama"));
+		eventKeywords.add(preprocessor.stem("nuclear"));
+		eventKeywords.add(preprocessor.stem("reactor"));
+		eventKeywords.add(preprocessor.stem("radiation"));
+		eventKeywords.add(preprocessor.stem("suspect"));
+		eventKeywords.add(preprocessor.stem("tsarnaev"));
+		eventKeywords.add(preprocessor.stem("watertown"));
+		eventKeywords.add(preprocessor.stem("sandy"));
+		eventKeywords.add(preprocessor.stem("katrina"));
+		eventKeywords.add(preprocessor.stem("japan"));
+		eventKeywords.add(preprocessor.stem("cyclone"));
+		eventKeywords.add(preprocessor.stem("hurricane"));
+		eventKeywords.add(preprocessor.stem("volcano"));
+		eventKeywords.add(preprocessor.stem("volcanic"));
 	}
 
 	public static String correctFile(String file) throws Exception
@@ -115,11 +116,11 @@ class ReadNewsblaster
 			try{
 				if (k.charAt(0)==' ')
 				{
-					sBuilder.append(Stem.stemmer(k.substring(1))+",");
+					sBuilder.append(preprocessor.stem(k.substring(1))+",");
 				}
 				else
 				{
-					sBuilder.append(Stem.stemmer(k)+",");
+					sBuilder.append(preprocessor.stem(k)+",");
 				}
 			}
 			catch(StringIndexOutOfBoundsException e)
