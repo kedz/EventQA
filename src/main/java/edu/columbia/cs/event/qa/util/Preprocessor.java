@@ -34,12 +34,12 @@ public class Preprocessor {
         return tokenize(replace(line));
     }
 
-    public void loadStopWords () { loadStopWords("stopwords.txt"); }
+    public void loadStopWords () { loadStopWords("/stopwords.txt"); }
 
     public void loadStopWords (String stopWordsFile) {
         try {
             this.stopwords = new HashSet<String>();
-            InputStream input = ClassLoader.getSystemResourceAsStream(stopWordsFile);
+            InputStream input = getClass().getResourceAsStream(stopWordsFile);
             BufferedReader reader = new BufferedReader(new InputStreamReader(input, "UTF-8"));
             String line;
             while ((line = reader.readLine()) != null) {
@@ -54,12 +54,12 @@ public class Preprocessor {
         }
     }
 
-    public void loadReplaceWords () { loadReplacements("replacements.txt"); }
+    public void loadReplaceWords () { loadReplacements("/replacements.txt"); }
 
     public void loadReplacements (String replaceWordsFile) {
         try {
             this.replacewords = new HashMap<String, String>();
-            InputStream input = ClassLoader.getSystemResourceAsStream(replaceWordsFile);
+            InputStream input = getClass().getResourceAsStream(replaceWordsFile);
             BufferedReader reader = new BufferedReader(new InputStreamReader(input, "UTF-8"));
             String line;
             while ((line = reader.readLine()) != null) {

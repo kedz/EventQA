@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="eventqa" default="all">
+  
+  
+  <property file="build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.zip"/>
+    <include name="*.apk"/>
+    <include name="*.war"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.ane"/>
+    <include name="*.swc"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.7" value="${jdk.home.1.7}/bin"/>
+  <path id="jdk.classpath.1.7">
+    <fileset dir="${jdk.home.1.7}">
+      <include name="lib/ant-javafx.jar"/>
+      <include name="lib/dt.jar"/>
+      <include name="lib/javafx-doclet.jar"/>
+      <include name="lib/javafx-mx.jar"/>
+      <include name="lib/jconsole.jar"/>
+      <include name="lib/sa-jdi.jar"/>
+      <include name="lib/tools.jar"/>
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/deploy.jar"/>
+      <include name="jre/lib/htmlconverter.jar"/>
+      <include name="jre/lib/javaws.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jfr.jar"/>
+      <include name="jre/lib/jfxrt.jar"/>
+      <include name="jre/lib/JObjC.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/plugin.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.7}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.7}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.7"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.lib.classpath">
+    <fileset dir="${basedir}/lib">
+      <patternset refid="library.patterns"/>
+    </fileset>
+  </path>
+  
+  <path id="library.maven:_de.jollyday:jollyday:0.4.7.classpath">
+    <pathelement location="${path.variable.maven_repository}/de/jollyday/jollyday/0.4.7/jollyday-0.4.7.jar"/>
+  </path>
+  
+  <path id="library.maven:_edu.stanford.nlp:stanford-corenlp:1.3.5.classpath">
+    <pathelement location="${path.variable.maven_repository}/edu/stanford/nlp/stanford-corenlp/1.3.5/stanford-corenlp-1.3.5.jar"/>
+  </path>
+  
+  <path id="library.maven:_javax.xml.bind:jaxb-api:2.2.7.classpath">
+    <pathelement location="${path.variable.maven_repository}/javax/xml/bind/jaxb-api/2.2.7/jaxb-api-2.2.7.jar"/>
+  </path>
+  
+  <path id="library.maven:_joda-time:joda-time:2.1.classpath">
+    <pathelement location="${path.variable.maven_repository}/joda-time/joda-time/2.1/joda-time-2.1.jar"/>
+  </path>
+  
+  <path id="library.maven:_junit:junit:4.11.classpath">
+    <pathelement location="${path.variable.maven_repository}/junit/junit/4.11/junit-4.11.jar"/>
+  </path>
+  
+  <path id="library.maven:_net.sf.squirrel-sql.thirdparty-non-maven:java-cup:0.11a.classpath">
+    <pathelement location="${path.variable.maven_repository}/net/sf/squirrel-sql/thirdparty-non-maven/java-cup/0.11a/java-cup-0.11a.jar"/>
+  </path>
+  
+  <path id="library.maven:_nz.ac.waikato.cms.weka:weka-stable:3.6.9.classpath">
+    <pathelement location="${path.variable.maven_repository}/nz/ac/waikato/cms/weka/weka-stable/3.6.9/weka-stable-3.6.9.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.jblas:jblas:1.2.3.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/jblas/jblas/1.2.3/jblas-1.2.3.jar"/>
+  </path>
+  
+  <path id="library.maven:_org.jdom:jdom2:2.0.5.classpath">
+    <pathelement location="${path.variable.maven_repository}/org/jdom/jdom2/2.0.5/jdom2-2.0.5.jar"/>
+  </path>
+  
+  <path id="library.maven:_xalan:xalan:2.7.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/xalan/xalan/2.7.0/xalan-2.7.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_xerces:xercesimpl:2.8.0.classpath">
+    <pathelement location="${path.variable.maven_repository}/xerces/xercesImpl/2.8.0/xercesImpl-2.8.0.jar"/>
+  </path>
+  
+  <path id="library.maven:_xml-apis:xml-apis:1.3.03.classpath">
+    <pathelement location="${path.variable.maven_repository}/xml-apis/xml-apis/1.3.03/xml-apis-1.3.03.jar"/>
+  </path>
+  
+  <path id="library.maven:_xom:xom:1.2.5.classpath">
+    <pathelement location="${path.variable.maven_repository}/xom/xom/1.2.5/xom-1.2.5.jar"/>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <pathelement location="${javac2.home}/javac2.jar"/>
+    <pathelement location="${javac2.home}/jdom.jar"/>
+    <pathelement location="${javac2.home}/asm4-all.jar"/>
+    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module EventQA -->
+  
+  <dirname property="module.eventqa.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.eventqa" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.eventqa" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.eventqa" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.eventqa" value="${compiler.args}"/>
+  
+  <property name="eventqa.output.dir" value="${module.eventqa.basedir}/target/classes"/>
+  <property name="eventqa.testoutput.dir" value="${module.eventqa.basedir}/target/test-classes"/>
+  
+  <path id="eventqa.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="eventqa.module.production.classpath">
+    <path refid="${module.jdk.classpath.eventqa}"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.maven:_nz.ac.waikato.cms.weka:weka-stable:3.6.9.classpath"/>
+    <path refid="library.maven:_net.sf.squirrel-sql.thirdparty-non-maven:java-cup:0.11a.classpath"/>
+    <path refid="library.maven:_org.jblas:jblas:1.2.3.classpath"/>
+    <path refid="library.maven:_junit:junit:4.11.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.jdom:jdom2:2.0.5.classpath"/>
+    <path refid="library.maven:_edu.stanford.nlp:stanford-corenlp:1.3.5.classpath"/>
+    <path refid="library.maven:_xom:xom:1.2.5.classpath"/>
+    <path refid="library.maven:_xml-apis:xml-apis:1.3.03.classpath"/>
+    <path refid="library.maven:_xerces:xercesimpl:2.8.0.classpath"/>
+    <path refid="library.maven:_xalan:xalan:2.7.0.classpath"/>
+    <path refid="library.maven:_joda-time:joda-time:2.1.classpath"/>
+    <path refid="library.maven:_de.jollyday:jollyday:0.4.7.classpath"/>
+    <path refid="library.maven:_javax.xml.bind:jaxb-api:2.2.7.classpath"/>
+  </path>
+  
+  <path id="eventqa.runtime.production.module.classpath">
+    <pathelement location="${eventqa.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.maven:_nz.ac.waikato.cms.weka:weka-stable:3.6.9.classpath"/>
+    <path refid="library.maven:_net.sf.squirrel-sql.thirdparty-non-maven:java-cup:0.11a.classpath"/>
+    <path refid="library.maven:_org.jblas:jblas:1.2.3.classpath"/>
+    <path refid="library.maven:_junit:junit:4.11.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.jdom:jdom2:2.0.5.classpath"/>
+    <path refid="library.maven:_edu.stanford.nlp:stanford-corenlp:1.3.5.classpath"/>
+    <path refid="library.maven:_xom:xom:1.2.5.classpath"/>
+    <path refid="library.maven:_xml-apis:xml-apis:1.3.03.classpath"/>
+    <path refid="library.maven:_xerces:xercesimpl:2.8.0.classpath"/>
+    <path refid="library.maven:_xalan:xalan:2.7.0.classpath"/>
+    <path refid="library.maven:_joda-time:joda-time:2.1.classpath"/>
+    <path refid="library.maven:_de.jollyday:jollyday:0.4.7.classpath"/>
+    <path refid="library.maven:_javax.xml.bind:jaxb-api:2.2.7.classpath"/>
+  </path>
+  
+  <path id="eventqa.module.classpath">
+    <path refid="${module.jdk.classpath.eventqa}"/>
+    <pathelement location="${eventqa.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.maven:_nz.ac.waikato.cms.weka:weka-stable:3.6.9.classpath"/>
+    <path refid="library.maven:_net.sf.squirrel-sql.thirdparty-non-maven:java-cup:0.11a.classpath"/>
+    <path refid="library.maven:_org.jblas:jblas:1.2.3.classpath"/>
+    <path refid="library.maven:_junit:junit:4.11.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.jdom:jdom2:2.0.5.classpath"/>
+    <path refid="library.maven:_edu.stanford.nlp:stanford-corenlp:1.3.5.classpath"/>
+    <path refid="library.maven:_xom:xom:1.2.5.classpath"/>
+    <path refid="library.maven:_xml-apis:xml-apis:1.3.03.classpath"/>
+    <path refid="library.maven:_xerces:xercesimpl:2.8.0.classpath"/>
+    <path refid="library.maven:_xalan:xalan:2.7.0.classpath"/>
+    <path refid="library.maven:_joda-time:joda-time:2.1.classpath"/>
+    <path refid="library.maven:_de.jollyday:jollyday:0.4.7.classpath"/>
+    <path refid="library.maven:_javax.xml.bind:jaxb-api:2.2.7.classpath"/>
+  </path>
+  
+  <path id="eventqa.runtime.module.classpath">
+    <pathelement location="${eventqa.testoutput.dir}"/>
+    <pathelement location="${eventqa.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.maven:_nz.ac.waikato.cms.weka:weka-stable:3.6.9.classpath"/>
+    <path refid="library.maven:_net.sf.squirrel-sql.thirdparty-non-maven:java-cup:0.11a.classpath"/>
+    <path refid="library.maven:_org.jblas:jblas:1.2.3.classpath"/>
+    <path refid="library.maven:_junit:junit:4.11.classpath"/>
+    <path refid="library.maven:_org.hamcrest:hamcrest-core:1.3.classpath"/>
+    <path refid="library.maven:_org.jdom:jdom2:2.0.5.classpath"/>
+    <path refid="library.maven:_edu.stanford.nlp:stanford-corenlp:1.3.5.classpath"/>
+    <path refid="library.maven:_xom:xom:1.2.5.classpath"/>
+    <path refid="library.maven:_xml-apis:xml-apis:1.3.03.classpath"/>
+    <path refid="library.maven:_xerces:xercesimpl:2.8.0.classpath"/>
+    <path refid="library.maven:_xalan:xalan:2.7.0.classpath"/>
+    <path refid="library.maven:_joda-time:joda-time:2.1.classpath"/>
+    <path refid="library.maven:_de.jollyday:jollyday:0.4.7.classpath"/>
+    <path refid="library.maven:_javax.xml.bind:jaxb-api:2.2.7.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.eventqa">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.eventqa">
+    <patternset refid="excluded.from.module.eventqa"/>
+  </patternset>
+  
+  <path id="eventqa.module.sourcepath">
+    <dirset dir="${module.eventqa.basedir}">
+      <include name="src/main/java"/>
+      <include name="src/main/resources"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.eventqa" depends="compile.module.eventqa.production,compile.module.eventqa.tests" description="Compile module EventQA"/>
+
+  <target name="compile.module.eventqa.production" depends="register.custom.compilers" description="Compile module EventQA; production classes">
+    <mkdir dir="${eventqa.output.dir}"/>
+    <javac2 destdir="${eventqa.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.eventqa}/javac">
+      <compilerarg line="${compiler.args.eventqa}"/>
+      <bootclasspath refid="eventqa.module.bootclasspath"/>
+      <classpath refid="eventqa.module.production.classpath"/>
+      <src refid="eventqa.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.eventqa"/>
+    </javac2>
+    
+    <copy todir="${eventqa.output.dir}">
+      <fileset dir="${module.eventqa.basedir}/src/main/java">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.eventqa.basedir}/src/main/resources">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.eventqa.tests" depends="register.custom.compilers,compile.module.eventqa.production" description="compile module EventQA; test classes" unless="skip.tests"/>
+
+    <target name="jar" depends="compile.module.eventqa.production">
+        <mkdir dir="${module.eventqa.basedir}/target/dist"/>
+        <jar destfile="${module.eventqa.basedir}/target/dist/eventqa.jar"
+             basedir="${eventqa.output.dir}"></jar>
+    </target>
+
+    <target name="train" depends="jar">
+        <java classname="edu.columbia.cs.event.qa.task.Training">
+            <classpath>
+                <pathelement path="${module.eventqa.basedir}/target/dist/eventqa.jar"></pathelement>
+                <path refid="eventqa.module.production.classpath"></path>
+            </classpath>
+        </java>
+    </target>
+
+  <target name="clean.module.eventqa" description="cleanup module">
+    <delete dir="${eventqa.output.dir}"/>
+    <delete dir="${eventqa.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.eventqa" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.eventqa" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>

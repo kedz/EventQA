@@ -40,7 +40,12 @@ public class EventQAConfig {
 
     }
 
-    public String getProperty(String property) {return properties.getProperty(property);}
+    public String getProperty(String property) {
+        if (property.contains("file"))
+            return properties.getProperty("dir")+properties.getProperty(property);
+        else
+            return properties.getProperty(property);
+    }
 
 
 }

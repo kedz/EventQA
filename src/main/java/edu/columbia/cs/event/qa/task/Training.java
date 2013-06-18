@@ -1,5 +1,6 @@
 package edu.columbia.cs.event.qa.task;
 
+import edu.columbia.cs.event.qa.util.EventQAConfig;
 import edu.columbia.cs.event.qa.util.Preprocessor;
 import org.jblas.DoubleMatrix;
 import java.util.ArrayList;
@@ -35,7 +36,9 @@ public class Training {
         numDoc = 0;
     }
 
-    public void loadTrainingData () throws IOException { loadTrainingData("/Users/wojo/Documents/eventQA/resources/QApair_text_training_Full.txt"); }
+    public void loadTrainingData () throws IOException {
+        loadTrainingData(EventQAConfig.getInstance().getProperty("corpus.file"));
+    }
 
     public void loadTrainingData (String fileName) throws IOException {
 
@@ -64,60 +67,20 @@ public class Training {
                 }
             }
             if (i%100 == 0) { System.out.println("Read "+i+" documents"); } i++;
-            if (i > 300) break;
+            if (i > 100) break;
         }
-
-        //PrintWriter writer = new PrintWriter(new FileWriter("/proj/fluke/users/shreya2k7/newsblaster/allTerms2007.txt"));
 
         for (Map.Entry<String, ArrayList<Integer>> entry: wordSeenInDocMap.entrySet()) {
             if (entry.getValue().size() > 5) {
                 terms.add(entry.getKey());
-                //writer.println(e.getKey());
             }
         }
-        //writer.flush();
-        //writer.close();
 
         numDoc = i;
-
-        System.out.println("Total number of terms: "+terms.size());
-        System.out.println("Total number of documents: "+numDoc);
-    }
-
-    public void buildTxDMatrix(boolean saveTxDMatrixOn) throws Exception {
-
-        //PrintWriter writer = new PrintWriter(new FileWriter("/proj/fluke/users/shreya2k7/newsblaster/MatrixFull2805.txt"));
-
-        for (int i=0; i<terms.size(); i++) {
-            double[][] row = new double[1][numDoc];
-
-            for (int j=0; j<row[0].length; j++) { row[0][j] = 0.0; }
-
-            for (int j: wordSeenInDocMap.get(terms.get(i))) {
-                row[0][j] = getCount(terms.get(i), docIndexMap.get(j));
-            }
-
-            if (saveTxDMatrixOn) {
-                for (int j=0; j<row[0].length; j++) {
-                    if (j == row[0].length-1) {
-                        //writer.print(row[0][k]);
-                    } else {
-                        //writer.print(row[0][k]+",");
-                    }
-                }
-            }
-
-            if (i%100 == 0) { System.out.println("Processed "+i+" terms"); }
-            //writer.println();
-            //writer.flush();
-        }
-        //writer.close();
     }
 
     public void buildTxDMatrix() throws Exception {
-
         TxDMatrix = DoubleMatrix.zeros(terms.size(), numDoc);
-
         for (int i=0; i<terms.size(); i++) {
             for (int j : wordSeenInDocMap.get(terms.get(i))) {
                 try {
@@ -126,7 +89,7 @@ public class Training {
                     System.err.println(i+"-"+j);
                 }
             }
-            if (i % 100 == 0) { System.out.println("Processed "+i+" terms"); }
+            if (i % 1000 == 0) { System.out.println("Processed "+i+" terms"); }
         }
     }
 
@@ -140,7 +103,41 @@ public class Training {
         return count;
     }
 
-    public void printCorpusStats(boolean wordsSeenInDocON) throws IOException {
+    public void saveTxDMatrix () throws Exception {
+        saveTxDMatrix(EventQAConfig.getInstance().getProperty("term.doc.file"));
+    }
+
+    public void saveTxDMatrix (String fileName) throws Exception {
+
+        PrintWriter writer = new PrintWriter(new FileWriter(fileName));
+
+        for (int i=0; i<terms.size(); i++) {
+            double[] row = new double[numDoc];
+
+            for (int j=0; j<row.length; j++) { row[j] = 0.0; }
+
+            for (int j: wordSeenInDocMap.get(terms.get(i))) {
+                row[j] = getCount(terms.get(i), docIndexMap.get(j));
+            }
+
+            for (int j=0; j<row.length; j++) {
+                if (j == row.length-1) {
+                    writer.print(row[j]);
+                } else {
+                    writer.print(row[j]+",");
+                }
+            }
+
+            if (i%1000 == 0) { System.out.println("Processed "+i+" terms"); }
+            writer.println();
+            writer.flush();
+        }
+        writer.close();
+    }
+
+    public void printCorpusStats () throws Exception { printCorpusStats(false); }
+
+    public void printCorpusStats (boolean wordsSeenInDocON) throws IOException {
 
         System.out.println("********** Printing Corpus Statistics **********");
         System.out.println("TxD Map Size: "+wordSeenInDocMap.size());
@@ -158,8 +155,46 @@ public class Training {
             }
         }
 
-        System.out.println("Total Vocab Size: "+terms.size());
+        System.out.println("Total Number of Terms: "+terms.size());
         System.out.println("Total Number of Docs: "+numDoc);
         System.out.println("************************************************");
+    }
+
+    public void saveFreqTerms () throws Exception {
+        saveTxDMatrix(EventQAConfig.getInstance().getProperty("vocab.file"));
+    }
+
+    public void saveFreqTerms (String fileName) throws Exception {
+        PrintWriter writer = new PrintWriter(new FileWriter(fileName));
+        for (String word : terms) {
+            writer.println(word);
+        }
+        writer.flush();
+        writer.close();
+    }
+
+    public DoubleMatrix getTxDMatrix () { return TxDMatrix; }
+
+    public static void main (String[] args) {
+        try {
+            Training trainer = new Training();
+            long a = System.currentTimeMillis();
+            trainer.loadTrainingData();
+            long b = System.currentTimeMillis();
+            trainer.buildTxDMatrix();
+            long c = System.currentTimeMillis();
+            //trainer.saveFreqTerms();
+            trainer.printCorpusStats();
+            System.out.println("Loading time: "+(b-a)+"ms");
+            System.out.println("Building time: "+(c-b)+"ms");
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            System.exit(1);
+        }
     }
 }

@@ -1,6 +1,6 @@
 package edu.columbia.cs.event.qa.needsrefactoring;
 
-import edu.columbia.cs.event.qa.needsrefactoring.Train;
+import edu.columbia.cs.event.qa.util.Preprocessor;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -14,11 +14,13 @@ import java.util.Map.Entry;
 /**
  * This Class Computes the Document Frequency for each Term
  */
+
 public class GetDocumentFrequency {
 	
 	public static ArrayList<String> terms=new ArrayList<String>();
 	public static Map<String, Double> df=new HashMap<String, Double>();
 	public static int N=0;
+    public static Preprocessor preprocessor = new Preprocessor();
 	
 	public static void getDocFrequency(String termList, String docList, String dfreq) throws Exception
 	{	
@@ -46,7 +48,7 @@ public class GetDocumentFrequency {
 		int cnt2=0;
 		while ((docLine=bRdr.readLine())!=null)
 		{
-			ArrayList<String> allTokens= Train.preprocessor.run(docLine);
+			ArrayList<String> allTokens= preprocessor.run(docLine);
 			for(String t: terms)
 			{
 				if (allTokens.contains(t))
