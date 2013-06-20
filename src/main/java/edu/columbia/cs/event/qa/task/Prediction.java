@@ -178,8 +178,8 @@ public class Prediction {
         writer.println("@relation event");
         writer.println("@attribute cosine numeric");
         writer.println("@attribute class {yes, no}");
-        writer.println();
-        writer.println("@data");
+
+        writer.println("@data");writer.println();
         writer.flush();
 
         String[] QA = QASet.split("`");

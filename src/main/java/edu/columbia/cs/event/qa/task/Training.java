@@ -18,12 +18,13 @@ public class Training {
 
     private Preprocessor preprocessor;
     private List<HashMap<String,Integer>> documents;
-    private Set<String> terms;
+    private Map<String,Integer> terms;
+    private int numTerms;
 
     public Training () {
         preprocessor = new Preprocessor();
         documents = new ArrayList<HashMap<String, Integer>>();
-        terms = new HashSet<String>();
+        terms = new HashMap<String,Integer>();
     }
 
     public void run () {
@@ -66,9 +67,18 @@ public class Training {
                     if (wordCount.containsKey(token)) {
                         count = wordCount.get(token);
                     } else {
-                        terms.add(token);
+                        int dount = 0;
+                        if (terms.containsKey(token)) {
+                            dount = terms.get(token);
+                        }
+                        terms.put(token, dount+1);
                     }
                     wordCount.put(token, count+1);
+//                    count = 0;
+//                    if () {
+//                        count = terms.get(token);
+//                    }
+//                    terms.put(token, count+1);
                 }
 
                 documents.add(wordCount);
@@ -90,22 +100,27 @@ public class Training {
 
         int i = 0;
 
-        for (String word : terms) {
-            writer1.println(word);
-            Iterator<HashMap<String,Integer>> iter = documents.iterator();
-            while (iter.hasNext()) {
-                HashMap<String, Integer> wordCount = iter.next();
-                if (wordCount.containsKey(word)) {
-                    writer2.print(wordCount.get(word));
-                } else {
-                    writer2.print("0");
+        for (Map.Entry<String,Integer> entry : terms.entrySet()) {
+            String word = entry.getKey();
+            if (entry.getValue() > 5) {
+                writer1.println(word);
+                Iterator<HashMap<String,Integer>> iter = documents.iterator();
+                while (iter.hasNext()) {
+                    HashMap<String, Integer> wordCount = iter.next();
+                    if (wordCount.containsKey(word)) {
+                        writer2.print(wordCount.get(word));
+                    } else {
+                        writer2.print("0");
+                    }
+                    if (iter.hasNext()) { writer2.print(","); }
+                    else { writer2.print("\n"); }
                 }
-                if (iter.hasNext()) { writer2.print(","); }
-                else { writer2.print("\n"); }
+                if (i%100 == 0) { System.out.println("Processed "+i+" terms"); }
+                i++;
             }
-            if (i%100 == 0) { System.out.println("Processed "+i+" terms"); }
-            i++;
         }
+
+        numTerms = i;
 
         writer1.flush(); writer1.close();
         writer2.flush(); writer2.close();
@@ -113,7 +128,7 @@ public class Training {
 
     public void printCorpusStats () {
         System.out.println("********** Printing Corpus Statistics **********");
-        System.out.println("Total # of Terms: "+terms.size());
+        System.out.println("Total # of Terms: "+numTerms);
         System.out.println("Total # of Docs: "+documents.size());
         System.out.println("************************************************");
     }

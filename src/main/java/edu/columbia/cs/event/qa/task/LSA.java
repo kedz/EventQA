@@ -53,7 +53,7 @@ class LSA {
     public void load (String fileName) throws Exception {
         this.TxD = DoubleMatrix.zeros(numTerms, numDocs);
         String line; int i=0;
-        BufferedReader reader =new BufferedReader(new FileReader(fileName));
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
         while((line = reader.readLine())!=null) {
             String[] termFreq = line.split(",");
             for (int j=0; j<termFreq.length; j++) {
@@ -69,8 +69,10 @@ class LSA {
         // Singular.fullSVD(A)
         // Returns a DoubleMatrix[3] array of U, S, V such that M = U * diag(S) * V'
         System.out.print("Singular value decomposition... ");
+        long a = System.currentTimeMillis();
         DoubleMatrix[] svd = Singular.fullSVD(matrix);
-        System.out.println("Done!");
+        long b = System.currentTimeMillis();
+        System.out.println("Done! ["+(b-a)+" ms]");
 
         this.TxT = svd[0]; // U = M*M'
         this.singular = svd[1]; // singular values
