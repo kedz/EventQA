@@ -22,4 +22,6 @@ public interface WekaInterface {
 
     public int getLabel (Instance wekaInstance);
 
+    public void shutdown ();
+
 }

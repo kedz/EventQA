@@ -16,17 +16,24 @@ import weka.core.Instances;
 
 public class AMTData {
 
+    private SeedData seed;
+
     private static AMTData AMTData;
 
-    public static AMTData newInstance() {
+    public static AMTData newInstance(WekaInterface c1, WekaInterface c2) {
         if(AMTData == null)
-            AMTData = new AMTData();
+            AMTData = new AMTData(c1, c2);
         return AMTData;
     }
 
-    public void loadAMTData () { loadAMTData("amt_qa_test_v1_t_.45_preprocessed.xml"); }
+    public AMTData (WekaInterface c1, WekaInterface c2) {
+        System.out.println("Loading Weka Classifiers");
+        this.seed = new SeedData(c1, c2);
+    }
 
-    public void loadAMTData (String fileName) {
+    public SeedData loadAMTData () { return loadAMTData("amt_qa_test_v1_t_.45_preprocessed.xml"); }
+
+    public SeedData loadAMTData (String fileName) {
         try {
             Document data = FileLoader.newInstance().loadXMLData(fileName);
             NodeList queries = data.getElementsByTagName("Question");
@@ -36,7 +43,7 @@ public class AMTData {
             for (int i=0; i<queries.getLength(); i++) {
                 int label = Integer.parseInt(labels.item(i).getFirstChild().getNodeValue());
                 QAPair pair = new QAPair(queries.item(i), answers.item(i), label);
-                addWekaInstance(pair);
+                addWekaInstancesToSeed(pair);
             }
 
         } catch (Exception e) {
@@ -44,13 +51,11 @@ public class AMTData {
             e.printStackTrace();
             System.exit(1);
         }
+        return seed;
     }
 
-    public Instance addWekaInstance (QAPair pair) {
-        // TODO
-        //
-        //SeedData.newInstance().addInstanceToI1(buildWekaInstance(pair);
-        //SeedData.newInstance().addInstanceToI2(buildWekaInstance(pair));
-        return null;
+    public void addWekaInstancesToSeed (QAPair pair) {
+        seed.addInstanceToI1(pair);
+        seed.addInstanceToI2(pair);
     }
 }

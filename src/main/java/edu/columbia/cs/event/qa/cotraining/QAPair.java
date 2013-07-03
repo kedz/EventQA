@@ -50,9 +50,9 @@ public class QAPair {
         return output;
     }
 
-    public Node getQuery () { return query; }
+    public Element getQuery () { return query; }
     public String getQueryString () { return elementToString(query); }
-    public Node getAnswer () { return answer; }
+    public Element getAnswer () { return answer; }
     public String getAnswerString () { return elementToString(answer); }
     public String getQAString () { return getQueryString()+"<->"+getAnswerString(); }
     public int getLabel () { return label; }
