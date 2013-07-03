@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-import edu.columbia.cs.event.qa.util.EventQAConfig;
+import edu.columbia.cs.event.qa.util.ProjectConfiguration;
 import weka.core.Instances;
 import weka.classifiers.Classifier;
 import weka.classifiers.Evaluation;
@@ -18,7 +18,7 @@ public class WekaSMOClassifier implements Serializable {
     private Instances train;
 
     public WekaSMOClassifier () throws Exception {
-        this(EventQAConfig.getInstance().getProperty("weka.training.file"));
+        this(ProjectConfiguration.getInstance().getProperty("weka.training.file"));
     }
 
     public WekaSMOClassifier (String trainFileName) throws Exception {
@@ -35,7 +35,7 @@ public class WekaSMOClassifier implements Serializable {
     }
 
     public ArrayList<String> predict () throws Exception {
-        return predict(EventQAConfig.getInstance().getProperty("weka.testing.file"));
+        return predict(ProjectConfiguration.getInstance().getProperty("weka.testing.file"));
     }
 
     public ArrayList<String> predict (String testFileName) throws Exception {
@@ -49,7 +49,7 @@ public class WekaSMOClassifier implements Serializable {
     }
 
     public void evaluate () throws Exception {
-        evaluate(EventQAConfig.getInstance().getProperty("weka.testing.file"));
+        evaluate(ProjectConfiguration.getInstance().getProperty("weka.testing.file"));
     }
 
     public void evaluate (String testFileName) throws Exception {

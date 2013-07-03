@@ -1,11 +1,11 @@
 package edu.columbia.cs.event.qa.classifier;
 
-import edu.columbia.cs.event.qa.util.EventQAConfig;
+import edu.columbia.cs.event.qa.util.ProjectConfiguration;
+
 import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
-import java.io.Serializable;
 import java.io.IOException;
 import java.io.File;
 
@@ -22,7 +22,7 @@ public class WekaSMOClassifierFactory {
     private File serializedSMOFile;
 
     public WekaSMOClassifierFactory () {
-        String serialiedSMOFileName = EventQAConfig.getInstance().getProperty("serialized.smo.file");
+        String serialiedSMOFileName = ProjectConfiguration.getInstance().getProperty("serialized.smo.file");
         this.serializedSMOFile = new File(serialiedSMOFileName);
     }
 
@@ -48,40 +48,38 @@ public class WekaSMOClassifierFactory {
         return classifier;
     }
 
-    private void serialize (WekaSMOClassifier classifier) {
-        try {
-            FileOutputStream fileOut = new FileOutputStream(serializedSMOFile);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(classifier);
-            out.close();
-            fileOut.close();
-
-        } catch(IOException e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-            System.exit(1);
-        }
+    private void serialize (WekaSMOClassifier classifier) throws IOException {
+        FileOutputStream fileOut = new FileOutputStream(serializedSMOFile);
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(classifier);
+        out.close();
+        fileOut.close();
+//        try {
+//        } catch(IOException e) {
+//            System.err.println(e.getMessage());
+//            e.printStackTrace();
+//            System.exit(1);
+//        }
     }
 
-    private WekaSMOClassifier deserialize () {
+    private WekaSMOClassifier deserialize () throws Exception {
         WekaSMOClassifier classifier = null;
-        try {
-            FileInputStream fileIn = new FileInputStream(serializedSMOFile);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            classifier = (WekaSMOClassifier) in.readObject();
-            in.close();
-            fileIn.close();
-
-        } catch(IOException e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-            System.exit(1);
-
-        } catch(ClassNotFoundException e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
-            System.exit(1);
-        }
+        FileInputStream fileIn = new FileInputStream(serializedSMOFile);
+        ObjectInputStream in = new ObjectInputStream(fileIn);
+        classifier = (WekaSMOClassifier) in.readObject();
+        in.close();
+        fileIn.close();
+//        try {
+//        } catch(IOException e) {
+//            System.err.println(e.getMessage());
+//            e.printStackTrace();
+//            System.exit(1);
+//
+//        } catch(ClassNotFoundException e) {
+//            System.err.println(e.getMessage());
+//            e.printStackTrace();
+//            System.exit(1);
+//        }
         return classifier;
     }
 
