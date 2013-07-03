@@ -20,7 +20,7 @@ public interface WekaInterface {
 
     public Instance buildWekaInstance (QAPair pair);
 
-    public int getLabel (Instance wekaInstance);
+    public int classifyInstance (Instance wekaInstance);
 
     public void shutdown ();
 

@@ -33,8 +33,8 @@ public class SeedData {
         c2.buildWekaClassifier(i2);
     }
 
-    public void addInstanceToI1 (QAPair pair) { i1.add(c1.buildWekaInstance(pair)); }
-    public void addInstanceToI2 (QAPair pair) { i2.add(c2.buildWekaInstance(pair)); }
+    public void addInstanceToI1 (QAPair pair) { addInstanceToI1(c1.buildWekaInstance(pair)); }
+    public void addInstanceToI2 (QAPair pair) { addInstanceToI2(c2.buildWekaInstance(pair)); }
 
     public void addInstanceToI1 (Instance i) { i1.add(i); }
     public void addInstanceToI2 (Instance i) { i2.add(i); }

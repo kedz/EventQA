@@ -2,7 +2,6 @@ package edu.columbia.cs.event.qa.cotraining;
 
 import edu.columbia.cs.event.qa.util.ProjectConfiguration;
 import weka.core.Instance;
-import weka.core.Instances;
 
 import java.util.HashMap;
 
@@ -15,21 +14,23 @@ import java.util.HashMap;
  */
 public class Cotraining {
 
-    private int k; // # iterations
-    private int u; // pool size
-    private int v; // leap size
+    private int k;  // # iterations
+    private int u;  // pool size
+    private int v;  // leap size
 
     private SeedData seed;
 
-    private boolean on;
-
-    public Cotraining () {
+    public Cotraining (WekaInterface c1, WekaInterface c2) {
         k = Integer.parseInt(ProjectConfiguration.getInstance().getProperty("number.of.iterations"));
         u = Integer.parseInt(ProjectConfiguration.getInstance().getProperty("pool.size"));
         v = Integer.parseInt(ProjectConfiguration.getInstance().getProperty("leap.size"));
+        load(c1, c2);
+        run();
+    }
+
+    public void load (WekaInterface c1, WekaInterface c2) {
         System.out.println("Building AMT Seed Training Data");
-        AMTData.newInstance().loadAMTData("amt_qa_test_v1_t_.45_preprocessed.xml");
-        seed = new SeedData();
+        this.seed = AMTData.newInstance(c1, c2).loadAMTData(ProjectConfiguration.getInstance().getProperty("amt.train.file"));
     }
 
     public void run () {
@@ -37,35 +38,27 @@ public class Cotraining {
         for (int i=0; i<k; i++) {
 
             /* Train Classifiers C1 and C2 using Seed data */
-            SeedData.newInstance().buildClassifiers();
+            seed.buildClassifiers();
 
             /* Randomly choose u examples from Newsblaster data */
-            HashMap<QAPair,Instance> QAInstanceMap1 = select();
-            HashMap<QAPair,Instance> QAInstanceMap2 = select();
+            HashMap<Instance,QAPair> mapOfInstances1 = select(seed.getClassifier1());
+            HashMap<Instance,QAPair> mapOfInstances2 = select(seed.getClassifier2());
 
             /* Select v balanced examples and add to Seed data */
+
         }
 
     }
 
-    public HashMap<QAPair,Instance> select () {
-        HashMap<QAPair,Instance> map = new HashMap<QAPair, Instance>();
+    public HashMap<Instance,QAPair> select (WekaInterface classifier) {
+        HashMap<Instance,QAPair> map = new HashMap<Instance,QAPair>();
         for (int i=0; i<u/2; i++) {
             QAPair pair = NewsblasterData.newInstance().selectUniqueQAPair();
-            Instance view = buildWekaInstance(pair);
-            map.put(pair,view);
+            Instance view = classifier.buildWekaInstance(pair);
+            pair.setLabel(classifier.classifyInstance(view));
+            map.put(view, pair);
         }
-        on = !on;
         return map;
     }
 
-    public Instance buildWekaInstance (QAPair pair) {
-        Instance view = null;
-        if (on) {
-            // TODO
-        } else {
-            // TODO
-        }
-        return view;
-    }
 }
