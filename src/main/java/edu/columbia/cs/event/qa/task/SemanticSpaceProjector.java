@@ -1,6 +1,6 @@
 package edu.columbia.cs.event.qa.task;
 
-import edu.columbia.cs.event.qa.util.FileLoader;
+import edu.columbia.cs.event.qa.util.LoadMachine;
 import edu.columbia.cs.event.qa.util.SimplePreprocessor;
 import org.jblas.DoubleMatrix;
 import java.util.ArrayList;
@@ -15,23 +15,23 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 
-public class SSProjection {
+public class SemanticSpaceProjector {
 
     private ArrayList<String> terms;
     private DoubleMatrix semanticSpace;
 
-    private static SSProjection SSProjection;
+    private static SemanticSpaceProjector SemanticSpaceProjector;
 
-    public static SSProjection newInstance() {
-        if(SSProjection == null)
-            SSProjection = new SSProjection();
-        return SSProjection;
+    public static SemanticSpaceProjector newInstance() {
+        if (SemanticSpaceProjector == null)
+            SemanticSpaceProjector = new SemanticSpaceProjector();
+        return SemanticSpaceProjector;
     }
 
-    public SSProjection() {
+    public SemanticSpaceProjector() {
         try {
-            terms = FileLoader.newInstance().loadTerms();
-            semanticSpace = FileLoader.newInstance().loadSemanticSpace();
+            terms = LoadMachine.newInstance().loadTerms();
+            semanticSpace = LoadMachine.newInstance().loadSemanticSpace();
         } catch (Exception e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
@@ -56,6 +56,7 @@ public class SSProjection {
     }
 
     public double[] vectorize (ArrayList<String> tokenList) {
+        //System.out.println(StringUtils.join(tokenList.toArray()," "));
         double[] termsVector = new double[terms.size()];
         Map<String,Integer> wordCount = computeWordCount(tokenList);
         for (int i=0; i<terms.size(); i++) {

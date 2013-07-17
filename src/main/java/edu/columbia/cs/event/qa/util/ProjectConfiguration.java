@@ -16,7 +16,7 @@ public class ProjectConfiguration {
 
     private static ProjectConfiguration ProjectConfiguration;
 
-    public static ProjectConfiguration getInstance() {
+    public static ProjectConfiguration newInstance() {
         if(ProjectConfiguration == null)
             ProjectConfiguration = new ProjectConfiguration();
         return ProjectConfiguration;
@@ -34,14 +34,12 @@ public class ProjectConfiguration {
     }
 
     public String getProperty(String property) {
-        if (property.contains("xml")) {
-            return properties.getProperty("xml.dir")+properties.getProperty(property);
+        String output = "";
+        if (property.contains("amt")) {
+            output += properties.getProperty("processed.amt.dir");
         } else if (property.contains("file")) {
-            return properties.getProperty("dir")+properties.getProperty(property);
-        } else {
-            return properties.getProperty(property);
+            output += properties.getProperty("root.dir");
         }
+        return output+properties.getProperty(property);
     }
-
-
 }

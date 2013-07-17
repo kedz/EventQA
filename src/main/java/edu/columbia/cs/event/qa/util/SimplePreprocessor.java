@@ -33,8 +33,8 @@ public class SimplePreprocessor {
 
     public SimplePreprocessor() {
         try {
-            stopwords = FileLoader.newInstance().loadStopWords();
-            replacewords = FileLoader.newInstance().loadReplaceWords();
+            stopwords = LoadMachine.newInstance().loadStopWords();
+            replacewords = LoadMachine.newInstance().loadReplaceWords();
         } catch (IOException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();

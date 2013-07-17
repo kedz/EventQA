@@ -307,35 +307,6 @@
              basedir="${eventqa.output.dir}"/>
     </target>
 
-    <target name="train" depends="jar">
-        <java classname="edu.columbia.cs.event.qa.task.Training">
-            <classpath>
-                <pathelement location="${module.eventqa.basedir}/target/dist/eventqa.jar"/>
-                <path refid="eventqa.module.production.classpath"/>
-            </classpath>
-            <arg value=""/>
-            <arg value="107274"/>
-        </java>
-    </target>
-
-    <target name="lsa">
-        <java classname="edu.columbia.cs.event.qa.task.LSA">
-            <classpath>
-                <pathelement location="${module.eventqa.basedir}/target/dist/eventqa.jar"/>
-                <path refid="eventqa.module.production.classpath"/>
-            </classpath>
-        </java>
-    </target>
-
-    <target name="predict">
-        <java classname="edu.columbia.cs.event.qa.task.Prediction">
-            <classpath>
-                <pathelement location="${module.eventqa.basedir}/target/dist/eventqa.jar"/>
-                <path refid="eventqa.module.production.classpath"/>
-            </classpath>
-        </java>
-    </target>
-
     <target name="clean.module.eventqa" description="cleanup module">
         <delete dir="${eventqa.output.dir}"/>
         <delete dir="${eventqa.testoutput.dir}"/>

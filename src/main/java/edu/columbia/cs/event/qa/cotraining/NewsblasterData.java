@@ -1,16 +1,14 @@
 package edu.columbia.cs.event.qa.cotraining;
 
-import edu.columbia.cs.event.qa.util.FileLoader;
 import edu.columbia.cs.event.qa.util.ProjectConfiguration;
+import edu.columbia.cs.event.qa.util.LoadMachine;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 
 /**
 * Created with IntelliJ IDEA.
@@ -23,8 +21,9 @@ import java.util.Map;
 public class NewsblasterData {
 
     private File[] XMLFiles;
-    private Map<Integer,Document> cache;
     private HashSet<String> seedTable;
+
+    private boolean printDocIDOn;
 
     private static NewsblasterData NBData;
 
@@ -35,9 +34,8 @@ public class NewsblasterData {
     }
 
     public NewsblasterData () {
-        File folder = new File(ProjectConfiguration.getInstance().getProperty("processed.nb.dir"));
+        File folder = new File(ProjectConfiguration.newInstance().getProperty("processed.nb.dir"));
         XMLFiles = folder.listFiles();
-        cache = new HashMap<Integer,Document>();
         seedTable = new HashSet<String>();
     }
 
@@ -57,18 +55,12 @@ public class NewsblasterData {
     public Document selectRandomDocument () {
         Document doc = null;
         int item = randNumInRange(XMLFiles.length);
-        if (cache.containsKey(item)) {
-            doc = cache.get(item);
-            System.out.println("CACHE#"+item+": "+XMLFiles[item].getName());
-        } else {
-            try {
-                doc = FileLoader.newInstance().loadXMLData(XMLFiles[item].getAbsolutePath());
-                System.out.println("DOC#"+item+": "+XMLFiles[item].getName());
-                cache.put(item, doc);
-            } catch (Exception e) {
-                System.err.println("Error: loading XML File: "+XMLFiles[item].getName());
-                e.printStackTrace();
-            }
+        try {
+            doc = LoadMachine.newInstance().loadXMLFile(XMLFiles[item].getAbsolutePath());
+            if (printDocIDOn) { System.out.println("DOC#"+item+": "+XMLFiles[item].getName()); }
+        } catch (Exception e) {
+            System.err.println("Error: loading XML File: "+XMLFiles[item].getName());
+            e.printStackTrace();
         }
         return doc;
     }
@@ -85,11 +77,13 @@ public class NewsblasterData {
                     item = randNumInRange(sentences.getLength());
                     Node sentence = sentences.item(item);
                     if (sentence != null) {
+                        doc = null;
                         return new QAPair(title, sentence);
                     }
                 }
             }
         }
+        doc = null;
         return selectRandomQAPair(selectRandomDocument());
     }
 
@@ -97,7 +91,7 @@ public class NewsblasterData {
      * SEED TABLE
      */
 
-    public void addToSeedTable (String entry) {
+    public void updateSeedTable (String entry) {
         seedTable.add(entry);
     }
 
@@ -105,8 +99,12 @@ public class NewsblasterData {
         if (seedTable.contains(entry)) { return true;} else { return false; }
     }
 
-    public void clearSeedTable () {
-        seedTable.clear();
-    }
+    public void clearSeedTable () { seedTable.clear(); }
 
+    public HashSet<String> getSeedTable () { return seedTable; }
+
+//    public static void main (String[] args) {
+//        QAPair pair = NewsblasterData.newInstance().selectUniqueQAPair();
+//        System.out.println(pair.getQAString());
+//    }
 }

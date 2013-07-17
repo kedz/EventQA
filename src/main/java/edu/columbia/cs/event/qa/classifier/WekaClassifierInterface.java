@@ -1,6 +1,8 @@
-package edu.columbia.cs.event.qa.cotraining;
+package edu.columbia.cs.event.qa.classifier;
 
+import edu.columbia.cs.event.qa.cotraining.QAPair;
 import weka.classifiers.Classifier;
+import weka.classifiers.Evaluation;
 import weka.core.Instance;
 import weka.core.Instances;
 
@@ -12,7 +14,11 @@ import weka.core.Instances;
  * To change this template use File | Settings | File Templates.
  */
 
-public interface WekaInterface {
+public interface WekaClassifierInterface {
+
+    public String classifierName ();
+
+    public String nickname();
 
     public Instances initializeInstances ();
 
@@ -20,7 +26,9 @@ public interface WekaInterface {
 
     public Instance buildWekaInstance (QAPair pair);
 
-    public int classifyInstance (Instance wekaInstance);
+    public String classifyInstance (Instance wekaInstance);
+
+    public Evaluation evaluateClassifier (Instances trainInstances, Instances testInstances);
 
     public void shutdown ();
 
