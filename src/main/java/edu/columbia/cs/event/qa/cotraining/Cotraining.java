@@ -110,11 +110,6 @@ public class Cotraining {
         SaveMachine.newInstance().saveInstancesToARFF(testData.getInstances2(), template.replaceAll("type", "test").replaceAll("c_", "c2_"));
     }
 
-//    public void saveInstances (LabeledData data, String type) {
-//        SaveMachine.newInstance().saveInstancesToARFF(data.getInstances1(), instances1File.replaceAll("type", type));
-//        SaveMachine.newInstance().saveInstancesToARFF(data.getInstances2(), instances2File.replaceAll("type", type));
-//    }
-
     public int addExamplesFromNewsblaster (WekaClassifierInterface classifier) {
         /* Randomly choose set of examples from Newsblaster data */
         HashMap<Instance,QAPair> instanceMap = selectExamplesFromNB(classifier);

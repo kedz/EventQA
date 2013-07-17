@@ -1,7 +1,7 @@
 package edu.columbia.cs.event.qa.task;
 
 import edu.columbia.cs.event.qa.util.LoadMachine;
-import edu.columbia.cs.event.qa.util.SimplePreprocessor;
+//import edu.columbia.cs.event.qa.util.SimplePreprocessor;
 import org.jblas.DoubleMatrix;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,14 +41,6 @@ public class SemanticSpaceProjector {
 
     public double[] transform (ArrayList<String> tokenList) {
         return project(vectorize(tokenList));
-    }
-
-    public double[] transform (String line) {
-        return project(vectorize(preprocess(line)));
-    }
-
-    public ArrayList<String> preprocess (String line) {
-        return SimplePreprocessor.newInstance().forge(line);
     }
 
     public double[] project (double[] termsVector) {

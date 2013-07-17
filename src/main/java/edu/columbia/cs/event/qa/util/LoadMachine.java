@@ -78,35 +78,6 @@ public class LoadMachine {
         return replacewords;
     }
 
-    public Object[] loadCorpus (String fileName) throws IOException {
-        ArrayList<HashMap<String,Integer>> documents = new ArrayList<HashMap<String, Integer>>();
-        HashMap<String,Integer> terms = new HashMap<String,Integer>();
-        String line; int i = 0;
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
-        while ((line = reader.readLine()) != null) {
-            ArrayList<String> tokenList = SimplePreprocessor.newInstance().forge(line);
-            if (tokenList.size() > 0) {
-                HashMap<String, Integer> wordCount = new HashMap<String, Integer>();
-                for (String token : tokenList) {
-                    int count = 0;
-                    if (wordCount.containsKey(token)) {
-                        count = wordCount.get(token);
-                    } else {
-                        int dount = 0;
-                        if (terms.containsKey(token)) {
-                            dount = terms.get(token);
-                        }
-                        terms.put(token, dount+1);
-                    }
-                    wordCount.put(token, count+1);
-                }
-                documents.add(wordCount);
-                i++;
-            }
-        }
-        return new Object[] {terms, documents};
-    }
-
     public LabeledData loadAmazonMechanicalTurkData (WekaClassifierInterface c1, WekaClassifierInterface c2, String fileName) {
         LabeledData seed = new LabeledData(c1, c2);
         System.out.println("Loading Amazon Mechanical Turk data: "+fileName);
@@ -246,7 +217,6 @@ public class LoadMachine {
 
     public HashSet<String> loadStopWords () throws IOException { return loadStopWords("/stopwords.txt"); }
     public HashMap<String,String> loadReplaceWords () throws IOException { return loadReplaceWords("/replacements.txt"); }
-    public Object[] loadCorpus () throws IOException { return loadCorpus(corpusFileName); }
     public ArrayList<String> loadTerms () throws IOException { return loadTerms(termFileName); }
     public DoubleMatrix loadSemanticSpace () throws IOException { return loadSemanticSpace(spaceFileName); }
 

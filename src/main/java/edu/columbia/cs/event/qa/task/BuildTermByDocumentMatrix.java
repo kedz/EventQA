@@ -25,12 +25,6 @@ public class BuildTermByDocumentMatrix {
         terms = new HashMap<String,Integer>();
     }
 
-    public void load () throws IOException {
-        Object[] tmp = LoadMachine.newInstance().loadCorpus();
-        this.terms = (HashMap<String,Integer>) tmp[0];
-        this.documents = (ArrayList<HashMap<String,Integer>>) tmp[1];
-    }
-
     public void loadNewsblasterCorpus (String directory)  {
         this.documents = LoadMachine.newInstance().loadNewsblasterCorpus(directory);
         this.terms = documents.remove(documents.size()-1);
